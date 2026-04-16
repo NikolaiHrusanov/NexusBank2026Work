@@ -13,13 +13,411 @@
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+  <!-- Supabase Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/auth.css" />
+  
+  <style>
+    /* ===== WIZARD MODE STYLES ===== */
+    
+    /* Register Button - Centered at top */
+    .wizard-register-btn {
+      position: fixed;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+      transition: all 0.3s var(--ease);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.3px;
+    }
+    
+    .wizard-register-btn i {
+      font-size: 1rem;
+    }
+    
+    .wizard-register-btn:hover {
+      transform: translateX(-50%) translateY(-3px);
+      box-shadow: 0 15px 40px rgba(108, 92, 231, 0.5);
+    }
+    
+    /* Wizard Overlay - Full screen modal */
+    .wizard-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(13, 15, 26, 0.98);
+      backdrop-filter: blur(15px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+    }
+    
+    .wizard-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+    
+    /* Wizard Container */
+    .wizard-container {
+      width: 90%;
+      max-width: 520px;
+      max-height: 85vh;
+      overflow-y: auto;
+      background: linear-gradient(135deg, rgba(26, 30, 53, 0.98) 0%, rgba(19, 22, 42, 0.98) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 40px;
+      box-shadow: var(--sh-xl);
+      backdrop-filter: blur(20px);
+      position: relative;
+      animation: wizardSlideIn 0.4s var(--ease-out);
+    }
+    
+    .wizard-container::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .wizard-container::-webkit-scrollbar-thumb {
+      background: rgba(108, 92, 231, 0.35);
+      border-radius: 2px;
+    }
+    
+    @keyframes wizardSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    /* Close button */
+    .wizard-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-3);
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .wizard-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-1);
+    }
+    
+    /* Wizard Steps */
+    .wizard-step {
+      display: none;
+      animation: fadeStep 0.4s var(--ease);
+    }
+    
+    .wizard-step.active {
+      display: block;
+    }
+    
+    @keyframes fadeStep {
+      from { opacity: 0; transform: translateX(10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    /* Wizard Header */
+    .wizard-header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    
+    .wizard-title {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+    
+    .wizard-subtitle {
+      color: var(--text-2);
+      font-size: 0.9rem;
+    }
+    
+    /* Progress Steps */
+    .wizard-progress {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      position: relative;
+      padding: 0 10px;
+    }
+    
+    .wizard-progress::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 25px;
+      right: 25px;
+      height: 2px;
+      background: var(--border);
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    
+    .progress-step {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-3);
+      font-weight: 600;
+      font-size: 0.8rem;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s var(--ease);
+    }
+    
+    .progress-step.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+      box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+    }
+    
+    .progress-step.completed {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+    
+    .progress-step.completed span {
+      display: none;
+    }
+    
+    .progress-step.completed::after {
+      content: '✓';
+      font-size: 0.9rem;
+    }
+    
+    /* Country Grid */
+    .country-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+    
+    .country-option {
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--text-1);
+      cursor: pointer;
+      transition: all 0.25s var(--ease);
+      text-align: left;
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .country-option i {
+      color: var(--text-3);
+      font-size: 0.9rem;
+      width: 20px;
+    }
+    
+    .country-option:hover {
+      background: rgba(108, 92, 231, 0.15);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    
+    .country-option.selected {
+      background: rgba(108, 92, 231, 0.25);
+      border-color: var(--primary);
+    }
+    
+    .country-option.selected i {
+      color: var(--primary);
+    }
+    
+    /* Verification Code Input */
+    .verification-code-wrapper {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 24px 0;
+    }
+    
+    .code-input {
+      width: 50px;
+      height: 60px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--text-1);
+      outline: none;
+      transition: all 0.2s;
+    }
+    
+    .code-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+    }
+    
+    /* Phone Input with Country Code */
+    .phone-input-wrapper {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    
+    .country-code {
+      padding: 11px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--text-1);
+      font-weight: 600;
+      min-width: 90px;
+      text-align: center;
+    }
+    
+    /* Navigation Buttons */
+    .wizard-nav {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    
+    .wizard-btn {
+      flex: 1;
+      padding: 13px 20px;
+      border-radius: var(--r-sm);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .wizard-btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 4px 20px rgba(108, 92, 231, 0.35);
+    }
+    
+    .wizard-btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(108, 92, 231, 0.5);
+    }
+    
+    .wizard-btn-primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    
+    .wizard-btn-secondary {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+    }
+    
+    .wizard-btn-secondary:hover {
+      background: var(--surface-hover);
+      color: var(--text-1);
+    }
+    
+    /* Social Buttons in Wizard */
+    .wizard-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    
+    .wizard-social-btn {
+      flex: 1;
+      padding: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--text-1);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .wizard-social-btn:hover {
+      background: var(--surface-hover);
+      border-color: rgba(108, 92, 231, 0.4);
+    }
+    
+    /* Upload Area in Wizard */
+    .wizard-upload {
+      margin-top: 20px;
+    }
+    
+    /* Step Indicator Text */
+    .step-indicator {
+      text-align: center;
+      color: var(--text-3);
+      font-size: 0.8rem;
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+  </style>
 </head>
 <body class="auth-page">
 
-
-    <!-- Page Transition Overlay -->
+  <!-- Page Transition Overlay -->
   <div class="page-transition" id="pageTransition">
     <div class="transition-loader">
       <div class="loader-spinner"></div>
@@ -32,13 +430,361 @@
   <div class="bg-grain"></div>
 
   <!-- ══════════════════════════════════════════
-       MAIN LAYOUT
+       REGISTER BUTTON - Centered at top
   ══════════════════════════════════════════ -->
-  <div class="auth-container">
+  <button class="wizard-register-btn" id="wizardRegisterBtn">
+    <i class="fas fa-user-plus"></i>
+    Register
+  </button>
 
-    <!-- ── LEFT PANEL ────────────────────────── -->
-    <div class="auth-left">
+  <!-- ══════════════════════════════════════════
+       WIZARD OVERLAY - Step-by-step registration
+  ══════════════════════════════════════════ -->
+  <div class="wizard-overlay" id="wizardOverlay">
+    <div class="wizard-container">
+      <button class="wizard-close" id="wizardClose">
+        <i class="fas fa-times"></i>
+      </button>
 
+      <!-- Progress Steps -->
+      <div class="wizard-progress" id="wizardProgress">
+        <div class="progress-step" data-step="1"><span>1</span></div>
+        <div class="progress-step" data-step="2"><span>2</span></div>
+        <div class="progress-step" data-step="3"><span>3</span></div>
+        <div class="progress-step" data-step="4"><span>4</span></div>
+        <div class="progress-step" data-step="5"><span>5</span></div>
+        <div class="progress-step" data-step="6"><span>6</span></div>
+        <div class="progress-step" data-step="7"><span>7</span></div>
+        <div class="progress-step" data-step="8"><span>8</span></div>
+      </div>
+
+      <!-- Step 1: Country Selection -->
+      <div class="wizard-step active" data-step="1">
+        <div class="wizard-header">
+          <div class="step-indicator">Step 1 of 8</div>
+          <h2 class="wizard-title">Select Your Country</h2>
+          <p class="wizard-subtitle">Choose your country of residence</p>
+        </div>
+        
+        <div class="country-grid" id="countryGrid"></div>
+        
+        <div class="wizard-nav">
+          <button class="wizard-btn wizard-btn-primary" id="nextStep1" disabled>
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Email Verification -->
+      <div class="wizard-step" data-step="2">
+        <div class="wizard-header">
+          <div class="step-indicator">Step 2 of 8</div>
+          <h2 class="wizard-title">Verify Your Email</h2>
+          <p class="wizard-subtitle">We'll send a verification code to your email</p>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <div class="input-with-icon">
+            <i class="fi fas fa-envelope"></i>
+            <input type="email" class="form-control" id="wizardEmail" placeholder="you@example.com">
+          </div>
+        </div>
+        
+        <div class="wizard-social">
+          <button type="button" class="wizard-social-btn" id="googleSignup">
+            <i class="fab fa-google"></i> Google
+          </button>
+          <button type="button" class="wizard-social-btn" id="appleSignup">
+            <i class="fab fa-apple"></i> Apple
+          </button>
+        </div>
+        
+        <div id="emailVerificationSection" style="display:none;">
+          <p style="color: var(--success); margin: 16px 0; text-align: center;">
+            <i class="fas fa-check-circle"></i> Code sent to <span id="sentEmailDisplay"></span>
+          </p>
+          <div class="verification-code-wrapper">
+            <input type="text" class="code-input" maxlength="1" data-code="1">
+            <input type="text" class="code-input" maxlength="1" data-code="2">
+            <input type="text" class="code-input" maxlength="1" data-code="3">
+            <input type="text" class="code-input" maxlength="1" data-code="4">
+            <input type="text" class="code-input" maxlength="1" data-code="5">
+            <input type="text" class="code-input" maxlength="1" data-code="6">
+              <input type="text" class="code-input" maxlength="1" data-code="5">
+             <input type="text" class="code-input" maxlength="1" data-code="6">
+          </div>
+          <button type="button" class="wizard-btn wizard-btn-secondary" id="resendCode" style="margin-top: 12px;">
+            <i class="fas fa-redo-alt"></i> Resend Code
+          </button>
+        </div>
+        
+        <div class="wizard-nav">
+          <button class="wizard-btn wizard-btn-secondary" data-prev>
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button class="wizard-btn wizard-btn-primary" id="sendVerificationCode">
+            Send Code <i class="fas fa-paper-plane"></i>
+          </button>
+          <button class="wizard-btn wizard-btn-primary" id="verifyEmailCode" style="display:none;">
+            Verify <i class="fas fa-check"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Phone Verification -->
+      <div class="wizard-step" data-step="3">
+        <div class="wizard-header">
+          <div class="step-indicator">Step 3 of 8</div>
+          <h2 class="wizard-title">Verify Your Phone</h2>
+          <p class="wizard-subtitle">We'll send an SMS verification code</p>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <div class="phone-input-wrapper">
+            <div class="country-code" id="selectedCountryCode">+1</div>
+            <div class="input-with-icon" style="flex:1;">
+              <i class="fi fas fa-phone"></i>
+              <input type="tel" class="form-control" id="wizardPhone" placeholder="123 456 7890">
+            </div>
+          </div>
+        </div>
+        
+        <div id="phoneVerificationSection" style="display:none;">
+          <p style="color: var(--success); margin: 16px 0; text-align: center;">
+            <i class="fas fa-check-circle"></i> SMS sent to <span id="sentPhoneDisplay"></span>
+          </p>
+          <div class="verification-code-wrapper">
+            <input type="text" class="code-input phone-code" maxlength="1" data-code="1">
+            <input type="text" class="code-input phone-code" maxlength="1" data-code="2">
+            <input type="text" class="code-input phone-code" maxlength="1" data-code="3">
+            <input type="text" class="code-input phone-code" maxlength="1" data-code="4">
+            <input type="text" class="code-input phone-code" maxlength="1" data-code="5">
+            <input type="text" class="code-input phone-code" maxlength="1" data-code="6">
+              <input type="text" class="code-input" maxlength="1" data-code="5">
+              <input type="text" class="code-input" maxlength="1" data-code="6">
+          </div>
+          <button type="button" class="wizard-btn wizard-btn-secondary" id="resendSmsCode" style="margin-top: 12px;">
+            <i class="fas fa-redo-alt"></i> Resend SMS
+          </button>
+        </div>
+        
+        <div class="wizard-nav">
+          <button class="wizard-btn wizard-btn-secondary" data-prev>
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button class="wizard-btn wizard-btn-primary" id="sendPhoneCode">
+            Send SMS <i class="fas fa-paper-plane"></i>
+          </button>
+          <button class="wizard-btn wizard-btn-primary" id="verifyPhoneCode" style="display:none;">
+            Verify <i class="fas fa-check"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 4: Full Name -->
+      <div class="wizard-step" data-step="4">
+        <div class="wizard-header">
+          <div class="step-indicator">Step 4 of 8</div>
+          <h2 class="wizard-title">What's Your Name?</h2>
+          <p class="wizard-subtitle">Enter your full legal name</p>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <div class="input-with-icon">
+            <i class="fi fas fa-user"></i>
+            <input type="text" class="form-control" id="wizardFullName" placeholder="John Doe">
+          </div>
+        </div>
+        
+        <div class="wizard-nav">
+          <button class="wizard-btn wizard-btn-secondary" data-prev>
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button class="wizard-btn wizard-btn-primary" id="nextFromName" disabled>
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 5: Address -->
+      <div class="wizard-step" data-step="5">
+        <div class="wizard-header">
+          <div class="step-indicator">Step 5 of 8</div>
+          <h2 class="wizard-title">Your Address</h2>
+          <p class="wizard-subtitle">Where do you live?</p>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Street Address</label>
+          <div class="input-with-icon">
+            <i class="fi fas fa-map-marker-alt"></i>
+            <input type="text" class="form-control" id="wizardAddress" placeholder="123 Main Street">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input type="text" class="form-control" id="wizardCity" placeholder="City">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Postal Code</label>
+            <input type="text" class="form-control" id="wizardPostal" placeholder="Postal Code">
+          </div>
+        </div>
+        
+        <div class="wizard-nav">
+          <button class="wizard-btn wizard-btn-secondary" data-prev>
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button class="wizard-btn wizard-btn-primary" id="nextFromAddress" disabled>
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 6: Age & Occupation -->
+      <div class="wizard-step" data-step="6">
+        <div class="wizard-header">
+          <div class="step-indicator">Step 6 of 8</div>
+          <h2 class="wizard-title">Personal Details</h2>
+          <p class="wizard-subtitle">Tell us about yourself</p>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Age</label>
+          <div class="input-with-icon">
+            <i class="fi fas fa-calendar"></i>
+            <input type="number" class="form-control" id="wizardAge" placeholder="25" min="18" max="120">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Occupation</label>
+          <div class="input-with-icon">
+            <i class="fi fas fa-briefcase"></i>
+            <input type="text" class="form-control" id="wizardOccupation" placeholder="e.g. Software Engineer">
+          </div>
+        </div>
+        
+        <div class="wizard-nav">
+          <button class="wizard-btn wizard-btn-secondary" data-prev>
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button class="wizard-btn wizard-btn-primary" id="nextFromDetails" disabled>
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 7: ID Verification -->
+      <div class="wizard-step" data-step="7">
+        <div class="wizard-header">
+          <div class="step-indicator">Step 7 of 8</div>
+          <h2 class="wizard-title">ID Verification</h2>
+          <p class="wizard-subtitle">Upload a government-issued ID</p>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">ID Type</label>
+          <div class="input-with-icon">
+            <i class="fi fas fa-id-card"></i>
+            <select class="form-control" id="wizardIdType">
+              <option value="" disabled selected>Select ID type</option>
+              <option value="passport">Passport</option>
+              <option value="driver">Driver's License</option>
+              <option value="national">National ID</option>
+              <option value="other">Other Government ID</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group wizard-upload">
+          <label class="form-label">Upload Document</label>
+          <div class="file-upload" id="wizardFileUpload">
+            <input type="file" id="wizardIdDocument" accept=".jpg,.jpeg,.png,.pdf">
+            <div class="file-upload-label">
+              <i class="fas fa-cloud-arrow-up"></i>
+              <span>Click to upload or drag & drop</span>
+            </div>
+          </div>
+          <div class="file-preview" id="wizardFilePreview" style="display:none;">
+            <i class="fas fa-file"></i>
+            <span id="wizardFileName"></span>
+            <button type="button" class="btn-remove" id="wizardRemoveFile">
+              <i class="fas fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="wizard-nav">
+          <button class="wizard-btn wizard-btn-secondary" data-prev>
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button class="wizard-btn wizard-btn-primary" id="nextFromId" disabled>
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 8: Password Setup -->
+      <div class="wizard-step" data-step="8">
+        <div class="wizard-header">
+          <div class="step-indicator">Step 8 of 8</div>
+          <h2 class="wizard-title">Create Password</h2>
+          <p class="wizard-subtitle">Choose a strong password</p>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-with-icon">
+            <i class="fi fas fa-lock"></i>
+            <input type="password" class="form-control has-action" id="wizardPassword" placeholder="••••••••">
+            <button type="button" class="input-action toggle-pw" data-target="wizardPassword">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <div class="strength-bar-wrap">
+            <div class="strength-bar" id="wizardStrengthBar"></div>
+          </div>
+          <div class="strength-label" id="wizardStrengthLabel">Enter a password</div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <div class="input-with-icon">
+            <i class="fi fas fa-lock"></i>
+            <input type="password" class="form-control has-action" id="wizardConfirmPassword" placeholder="••••••••">
+            <button type="button" class="input-action toggle-pw" data-target="wizardConfirmPassword">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <div class="form-hint error" id="wizardPwMismatch" style="display:none;">
+            <i class="fas fa-circle-exclamation"></i> Passwords do not match.
+          </div>
+        </div>
+        
+        <div class="wizard-nav">
+          <button class="wizard-btn wizard-btn-secondary" data-prev>
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button class="wizard-btn wizard-btn-primary" id="completeRegistration" disabled>
+            Complete Registration <i class="fas fa-check"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       MAIN LAYOUT (Left panel only visible initially)
+  ══════════════════════════════════════════ -->
+  <div class="auth-container" id="authContainer">
+    <!-- LEFT PANEL - Visible by default -->
+    <div class="auth-left" id="authLeft">
       <a href="index.html" class="auth-brand">
         <div class="brand-logo"><i class="fas fa-bolt"></i></div>
         <span class="brand-name">Nexus<span class="brand-accent">Bank</span></span>
@@ -90,525 +836,737 @@
           <div class="stat-label">Daily volume</div>
         </div>
       </div>
+    </div>
 
-    </div><!-- /auth-left -->
-
-    <!-- ── RIGHT PANEL ───────────────────────── -->
-    <div class="auth-right">
-      <div class="auth-right-inner" id="authRightInner">
+    <!-- RIGHT PANEL - Hidden initially -->
+    <div class="auth-right" id="authRight" style="display: none;">
+      <div class="auth-right-inner">
         <div class="auth-card">
-
-          <!-- Tab toggle -->
           <div class="auth-toggle">
             <button class="toggle-btn active" id="showLoginBtn">Sign In</button>
-            <button class="toggle-btn"        id="showRegisterBtn">Register</button>
+            <button class="toggle-btn" id="showRegisterBtn">Register</button>
           </div>
 
-          <!-- ════════════════════════
-               LOGIN FORM
-          ════════════════════════ -->
-          <form class="auth-form" id="loginForm" novalidate>
-
+          <!-- Login Form -->
+          <form class="auth-form" id="loginForm" novalidate style="display: block;">
             <div class="auth-header">
               <h2>Welcome back</h2>
               <p>Sign in to access your account</p>
             </div>
-
-            <!-- Email -->
+            
+            <div id="loginError" class="form-hint error" style="display:none; margin-bottom:16px;"></div>
+            
             <div class="form-group">
               <label class="form-label" for="loginEmail">Email Address</label>
               <div class="input-with-icon">
                 <i class="fi fas fa-envelope"></i>
-                <input class="form-control" type="email" id="loginEmail"
-                       placeholder="you@example.com" required />
+                <input class="form-control" type="email" id="loginEmail" placeholder="you@example.com" required />
               </div>
             </div>
-
-            <!-- Password -->
             <div class="form-group">
               <label class="form-label" for="loginPassword">Password</label>
               <div class="input-with-icon">
                 <i class="fi fas fa-lock"></i>
-                <input class="form-control has-action" type="password" id="loginPassword"
-                       placeholder="••••••••" required />
-                <button type="button" class="input-action toggle-pw"
-                        data-target="loginPassword" aria-label="Show password">
+                <input class="form-control has-action" type="password" id="loginPassword" placeholder="••••••••" required />
+                <button type="button" class="input-action toggle-pw" data-target="loginPassword">
                   <i class="fas fa-eye"></i>
                 </button>
               </div>
             </div>
-
-            <!-- Remember me / Forgot -->
             <div class="form-options">
-              <label class="checkbox">
-                <input type="checkbox" checked /> Remember me
-              </label>
-              <a href="#" class="forgot-link">Forgot password?</a>
+              <label class="checkbox"><input type="checkbox" checked /> Remember me</label>
+              <a href="#" class="forgot-link" id="forgotPassword">Forgot password?</a>
             </div>
-
             <button type="submit" class="btn-primary">
               <span>Sign In</span>
-              <i class="fas fa-arrow-right" style="font-size:.8rem;"></i>
+              <i class="fas fa-arrow-right"></i>
             </button>
-
-            <div class="auth-divider">or continue with</div>
-
-            <div class="social-login">
-              <button type="button" class="social-btn"><i class="fab fa-google"></i> Google</button>
-              <button type="button" class="social-btn"><i class="fab fa-apple"></i> Apple</button>
-              <button type="button" class="social-btn"><i class="fas fa-fingerprint"></i> Biometric</button>
-            </div>
-
-          </form><!-- /loginForm -->
-
-          <!-- ════════════════════════
-               REGISTER FORM
-          ════════════════════════ -->
-          <form class="auth-form" id="registerForm" style="display:none;" novalidate>
-
-            <!-- Scroll progress bar -->
-            <div class="scroll-progress-wrap">
-              <div class="scroll-progress-fill" id="regProgressFill"></div>
-            </div>
-
-            <div class="auth-header">
-              <h2>Create Account</h2>
-              <p>Fill in your details to get started</p>
-            </div>
-
-            <!-- Full Name -->
-            <div class="form-group">
-              <label class="form-label" for="fullName">Full Name *</label>
-              <div class="input-with-icon">
-                <i class="fi fas fa-user"></i>
-                <input class="form-control" type="text" id="fullName"
-                       placeholder="John Doe" required />
-              </div>
-            </div>
-
-            <!-- Email -->
-            <div class="form-group">
-              <label class="form-label" for="regEmail">Email Address *</label>
-              <div class="input-with-icon">
-                <i class="fi fas fa-envelope"></i>
-                <input class="form-control" type="email" id="regEmail"
-                       placeholder="you@example.com" required />
-              </div>
-            </div>
-
-            <!-- Address -->
-            <div class="form-group">
-              <label class="form-label" for="address">Address</label>
-              <div class="input-with-icon">
-                <i class="fi fas fa-map-marker-alt"></i>
-                <input class="form-control" type="text" id="address"
-                       placeholder="123 Main St, City" />
-              </div>
-            </div>
-
-            <!-- Occupation + Phone -->
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="occupation">Occupation</label>
-                <div class="input-with-icon">
-                  <i class="fi fas fa-briefcase"></i>
-                  <input class="form-control" type="text" id="occupation"
-                         placeholder="e.g. Engineer" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="phone">Phone</label>
-                <div class="input-with-icon">
-                  <i class="fi fas fa-phone"></i>
-                  <input class="form-control" type="tel" id="phone"
-                         placeholder="+1 234 567 8900" />
-                </div>
-              </div>
-            </div>
-
-            <!-- Age + Birth Year -->
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="age">Age *</label>
-                <div class="input-with-icon">
-                  <i class="fi fas fa-calendar"></i>
-                  <input class="form-control" type="number" id="age"
-                         placeholder="25" min="18" max="120" required />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="birthYear">Birth Year *</label>
-                <div class="input-with-icon">
-                  <i class="fi fas fa-calendar-alt"></i>
-                  <input class="form-control" type="number" id="birthYear"
-                         placeholder="1999" min="1900" max="2007" required />
-                </div>
-              </div>
-            </div>
-            <div class="form-hint error" id="ageMismatch" style="display:none;">
-              <i class="fas fa-circle-exclamation"></i> Age and birth year don't match.
-            </div>
-
-            <!-- ID Type -->
-            <div class="form-group" style="margin-top:6px;">
-              <label class="form-label" for="idType">ID Type *</label>
-              <div class="input-with-icon">
-                <i class="fi fas fa-id-card"></i>
-                <select class="form-control" id="idType" required>
-                  <option value="" disabled selected>Select ID type</option>
-                  <option value="passport">Passport</option>
-                  <option value="driver">Driver's License</option>
-                  <option value="national">National ID</option>
-                  <option value="student">Student ID</option>
-                  <option value="other">Other Government ID</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Upload ID Document -->
-            <div class="form-group">
-              <label class="form-label">
-                Upload ID Document *
-                <span style="text-transform:none;font-size:.68rem;font-weight:400;opacity:.7;">(JPG, PNG, PDF)</span>
-              </label>
-              <div class="file-upload" id="fileUploadZone">
-                <input type="file" id="idDocument" accept=".jpg,.jpeg,.png,.pdf" required />
-                <div class="file-upload-label">
-                  <i class="fas fa-cloud-arrow-up"></i>
-                  <span>Click to upload or drag &amp; drop</span>
-                </div>
-              </div>
-              <div class="file-preview" id="filePreview" style="display:none;">
-                <i class="fas fa-file"></i>
-                <span id="fileName"></span>
-                <button type="button" class="btn-remove" id="removeFile">
-                  <i class="fas fa-xmark"></i>
-                </button>
-              </div>
-              <div class="form-hint error" id="fileError" style="display:none;"></div>
-            </div>
-
-            <!-- Password -->
-            <div class="form-group">
-              <label class="form-label" for="regPassword">Password *</label>
-              <div class="input-with-icon">
-                <i class="fi fas fa-lock"></i>
-                <input class="form-control has-action" type="password" id="regPassword"
-                       placeholder="••••••••" required />
-                <button type="button" class="input-action toggle-pw"
-                        data-target="regPassword" aria-label="Show password">
-                  <i class="fas fa-eye"></i>
-                </button>
-              </div>
-              <div class="strength-bar-wrap">
-                <div class="strength-bar" id="strengthBar"></div>
-              </div>
-              <div class="strength-label" id="strengthLabel">Enter a password</div>
-              <div class="password-requirements">
-                <div class="req-item" id="reqLen">✗ At least 8 characters</div>
-                <div class="req-item" id="reqUp">✗ One uppercase letter</div>
-                <div class="req-item" id="reqLo">✗ One lowercase letter</div>
-                <div class="req-item" id="reqNum">✗ One number</div>
-                <div class="req-item" id="reqSp">✗ One special character</div>
-              </div>
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="form-group">
-              <label class="form-label" for="confirmPassword">Confirm Password *</label>
-              <div class="input-with-icon">
-                <i class="fi fas fa-lock"></i>
-                <input class="form-control has-action" type="password" id="confirmPassword"
-                       placeholder="••••••••" required />
-                <button type="button" class="input-action toggle-pw"
-                        data-target="confirmPassword" aria-label="Show password">
-                  <i class="fas fa-eye"></i>
-                </button>
-              </div>
-              <div class="form-hint error" id="pwMismatch" style="display:none;">
-                <i class="fas fa-circle-exclamation"></i> Passwords do not match.
-              </div>
-            </div>
-
-            <div class="form-hint error" id="regError" style="display:none; margin-bottom:14px;"></div>
-
-            <!-- Floating scroll-to-top -->
-            <button type="button" class="float-top" id="floatTop" aria-label="Back to top">
-              <i class="fas fa-arrow-up"></i>
-            </button>
-
-            <button type="submit" class="btn-primary" id="regSubmit" disabled style="margin-top:20px;">
-              <span>Create Account</span>
-              <i class="fas fa-arrow-right" style="font-size:.8rem;"></i>
-            </button>
-
-            <div class="auth-footer">
-              By signing up you agree to our
-              <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-            </div>
-
-          </form><!-- /registerForm -->
-
-        </div><!-- /auth-card -->
-      </div><!-- /auth-right-inner -->
-    </div><!-- /auth-right -->
-
-  </div><!-- /auth-container -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Loading overlay -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-spinner"></div>
-    <p style="font-size:.88rem;">Processing…</p>
+    <p>Processing…</p>
   </div>
 
-  <!-- Your existing auth.js (handles login, session, forgot password) -->
-  <script src="js/auth.js"></script>
-
-  <!-- Register form logic (tab switching, strength meter, file upload, scroll progress) -->
+  <!-- =============================================
+       SUPABASE + WIZARD JAVASCRIPT
+  ============================================= -->
   <script>
-  (function () {
-    'use strict';
-
-    document.addEventListener('DOMContentLoaded', function () {
-
-      const showLoginBtn  = document.getElementById('showLoginBtn');
-      const showRegBtn    = document.getElementById('showRegisterBtn');
-      const loginForm     = document.getElementById('loginForm');
-      const registerForm  = document.getElementById('registerForm');
-      const rightInner    = document.getElementById('authRightInner');
-      const loadingOverlay= document.getElementById('loadingOverlay');
-
-      /* ── TAB SWITCHING ──────────────────────── */
-      function showLogin() {
-        loginForm.style.display    = 'block';
-        registerForm.style.display = 'none';
-        showLoginBtn.classList.add('active');
-        showRegBtn.classList.remove('active');
-        rightInner.scrollTop = 0;
-      }
-
-      function showRegister() {
-        loginForm.style.display    = 'none';
-        registerForm.style.display = 'block';
-        showRegBtn.classList.add('active');
-        showLoginBtn.classList.remove('active');
-        rightInner.scrollTop = 0;
-        updateProgress();
-      }
-
-      showLoginBtn.addEventListener('click', showLogin);
-      showRegBtn.addEventListener('click', showRegister);
-
-      /* ── PASSWORD TOGGLE (register + login) ─── */
-      document.querySelectorAll('.toggle-pw').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const inp  = document.getElementById(btn.dataset.target);
-          const icon = btn.querySelector('i');
-          inp.type = inp.type === 'password' ? 'text' : 'password';
-          icon.classList.toggle('fa-eye');
-          icon.classList.toggle('fa-eye-slash');
-        });
-      });
-
-      /* ── PASSWORD STRENGTH ──────────────────── */
-      const pwInp    = document.getElementById('regPassword');
-      const strBar   = document.getElementById('strengthBar');
-      const strLabel = document.getElementById('strengthLabel');
-
-      const rules = [
-        { el: document.getElementById('reqLen'), test: v => v.length >= 8,           p: '✓ At least 8 characters',  f: '✗ At least 8 characters' },
-        { el: document.getElementById('reqUp'),  test: v => /[A-Z]/.test(v),         p: '✓ One uppercase letter',   f: '✗ One uppercase letter' },
-        { el: document.getElementById('reqLo'),  test: v => /[a-z]/.test(v),         p: '✓ One lowercase letter',   f: '✗ One lowercase letter' },
-        { el: document.getElementById('reqNum'), test: v => /[0-9]/.test(v),         p: '✓ One number',             f: '✗ One number' },
-        { el: document.getElementById('reqSp'),  test: v => /[^A-Za-z0-9]/.test(v), p: '✓ One special character',  f: '✗ One special character' },
+    (function() {
+      'use strict';
+      
+      console.log('🚀 Wizard initializing...');
+      
+      // ===== SUPABASE CONFIGURATION =====
+      const SUPABASE_URL = 'https://fgcekyagqijztfzzicjw.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnY2VreWFncWlqenRmenppY2p3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3NjA1ODMsImV4cCI6MjA3ODMzNjU4M30.f8PIMx_u7TnXo1cmqAqlnGo71ne6XdY7hQSOjGMX1RE';
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const REDIRECT_URL = window.location.origin;
+      
+      console.log('✅ Supabase client created');
+      
+      // ===== COUNTRY DATA =====
+      const countries = [
+        { name: 'United States', code: '+1', flag: '🇺🇸' },
+        { name: 'United Kingdom', code: '+44', flag: '🇬🇧' },
+        { name: 'Canada', code: '+1', flag: '🇨🇦' },
+        { name: 'Australia', code: '+61', flag: '🇦🇺' },
+        { name: 'Germany', code: '+49', flag: '🇩🇪' },
+        { name: 'France', code: '+33', flag: '🇫🇷' },
+        { name: 'Japan', code: '+81', flag: '🇯🇵' },
+        { name: 'Bulgaria', code: '+359', flag: '🇧🇬' },
+        { name: 'Spain', code: '+34', flag: '🇪🇸' },
+        { name: 'Italy', code: '+39', flag: '🇮🇹' }
       ];
-      const strColors = ['', '#E84393', '#FDCB6E', '#FDCB6E', '#00B894', '#00B894'];
-      const strTexts  = ['', 'Weak', 'Fair', 'Fair', 'Strong', 'Very strong'];
-
-      pwInp.addEventListener('input', () => {
-        const v = pwInp.value; let score = 0;
-        rules.forEach(r => {
-          const ok = r.test(v); if (ok) score++;
-          r.el.textContent = ok ? r.p : r.f;
-          r.el.classList.toggle('met', ok);
+      
+      // ===== STATE =====
+      let currentStep = 1;
+      let selectedCountry = null;
+      let emailVerified = false;
+      let phoneVerified = false;
+      let uploadedFile = null;
+      let generatedCode = '';
+      let phoneCode = '';
+      const wizardData = {};
+      
+      // ===== DOM ELEMENTS =====
+      const overlay = document.getElementById('wizardOverlay');
+      const registerBtn = document.getElementById('wizardRegisterBtn');
+      const closeBtn = document.getElementById('wizardClose');
+      const steps = document.querySelectorAll('.wizard-step');
+      const progressSteps = document.querySelectorAll('.progress-step');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      
+      console.log('📋 DOM Elements found:', {
+        overlay: !!overlay,
+        registerBtn: !!registerBtn,
+        closeBtn: !!closeBtn,
+        steps: steps.length,
+        progressSteps: progressSteps.length
+      });
+      
+      // ===== POPULATE COUNTRY GRID =====
+      const countryGrid = document.getElementById('countryGrid');
+      if (countryGrid) {
+        countries.forEach(country => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'country-option';
+          btn.innerHTML = `<i class="fas fa-globe"></i> ${country.flag} ${country.name}`;
+          btn.dataset.country = country.name;
+          btn.dataset.code = country.code;
+          btn.addEventListener('click', () => selectCountry(country, btn));
+          countryGrid.appendChild(btn);
         });
-        strBar.style.width      = (score / 5 * 100) + '%';
-        strBar.style.background = strColors[score] || '';
-        strLabel.textContent    = v ? strTexts[score] : 'Enter a password';
-        validate();
-      });
-
-      /* ── CONFIRM PASSWORD ───────────────────── */
-      const confPw   = document.getElementById('confirmPassword');
-      const mismatch = document.getElementById('pwMismatch');
-      confPw.addEventListener('input', () => {
-        const bad = confPw.value && confPw.value !== pwInp.value;
-        mismatch.style.display = bad ? 'block' : 'none';
-        validate();
-      });
-
-      /* ── AGE / BIRTH YEAR ───────────────────── */
-      const ageInp     = document.getElementById('age');
-      const birthYrInp = document.getElementById('birthYear');
-      const ageErr     = document.getElementById('ageMismatch');
-      const CY         = new Date().getFullYear();
-
-      function checkAge() {
-        const a = parseInt(ageInp.value), y = parseInt(birthYrInp.value);
-        if (a && y) { ageErr.style.display = Math.abs(CY - y - a) > 1 ? 'block' : 'none'; }
-        else        { ageErr.style.display = 'none'; }
-        validate();
+        console.log('🌍 Countries populated:', countries.length);
+      } else {
+        console.error('❌ Country grid not found!');
       }
-      ageInp.addEventListener('input', checkAge);
-      birthYrInp.addEventListener('input', checkAge);
-
-      /* ── FILE UPLOAD ────────────────────────── */
-      const fileInp = document.getElementById('idDocument');
-      const fprev   = document.getElementById('filePreview');
-      const fnameEl = document.getElementById('fileName');
-      const rmBtn   = document.getElementById('removeFile');
-      const fErr    = document.getElementById('fileError');
-      const MAX_MB  = 10;
-
-      fileInp.addEventListener('change', () => {
-        const f = fileInp.files[0]; if (!f) return;
-        if (f.size > MAX_MB * 1024 * 1024) {
-          fErr.textContent = `File too large (max ${MAX_MB} MB)`;
-          fErr.style.display = 'block'; fileInp.value = ''; return;
+      
+      function selectCountry(country, element) {
+        console.log('🌍 Country selected:', country.name);
+        document.querySelectorAll('.country-option').forEach(b => b.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedCountry = country;
+        wizardData.country = country.name;
+        wizardData.countryCode = country.code;
+        
+        const countryCodeDisplay = document.getElementById('selectedCountryCode');
+        if (countryCodeDisplay) {
+          countryCodeDisplay.textContent = country.code;
         }
-        fErr.style.display  = 'none';
-        fnameEl.textContent = f.name;
-        fprev.style.display = 'flex';
-        validate();
-      });
-
-      rmBtn.addEventListener('click', () => {
-        fileInp.value = ''; fprev.style.display = 'none'; fnameEl.textContent = '';
-        validate();
-      });
-
-      /* ── REGISTER VALIDATION ────────────────── */
-      const regSubmit   = document.getElementById('regSubmit');
-      const requiredIds = ['fullName', 'regEmail', 'age', 'birthYear', 'idType', 'regPassword', 'confirmPassword'];
-
-      function validate() {
-        const filled   = requiredIds.every(id => document.getElementById(id).value.trim());
-        const hasFile  = !!fileInp.files[0];
-        const match    = pwInp.value === confPw.value;
-        const noAgeErr = ageErr.style.display !== 'block';
-        const score    = rules.filter(r => r.test(pwInp.value)).length;
-        regSubmit.disabled = !(filled && hasFile && match && noAgeErr && score >= 4);
+        
+        const nextBtn = document.getElementById('nextStep1');
+        if (nextBtn) {
+          nextBtn.disabled = false;
+          console.log('✅ Next button enabled');
+        }
       }
-      requiredIds.forEach(id => document.getElementById(id).addEventListener('input', validate));
-
-      /* ── REGISTER SUBMIT ────────────────────── */
-      registerForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (regSubmit.disabled) return;
-
-        const newUser = {
-          id:       Date.now().toString(),
-          fullName: document.getElementById('fullName').value.trim(),
-          email:    document.getElementById('regEmail').value.trim(),
-          password: btoa(pwInp.value), // base64 encode, matching your auth.js pattern
-          phone:    document.getElementById('phone').value.trim(),
-          occupation: document.getElementById('occupation').value.trim(),
-          address:  document.getElementById('address').value.trim(),
-          age:      document.getElementById('age').value,
-          birthYear:document.getElementById('birthYear').value,
-          idType:   document.getElementById('idType').value,
-          createdAt:new Date().toISOString()
-        };
-
-        // Check for duplicate email
-        const users = JSON.parse(localStorage.getItem('nexusbank_users')) || [];
-        if (users.some(u => u.email === newUser.email)) {
-          const regErr = document.getElementById('regError');
-          regErr.textContent = 'An account with this email already exists.';
-          regErr.style.display = 'block';
-          return;
-        }
-
-        // Save user
-        users.push(newUser);
-        localStorage.setItem('nexusbank_users', JSON.stringify(users));
-
-               // Show transition then redirect
-        const transition = document.getElementById('pageTransition');
-        if (transition) {
-          transition.classList.add('active');
-          setTimeout(() => {
-            window.location.href = 'dashboard.html';
-          }, 500);
-        } else {
-          window.location.href = 'dashboard.html';
-        }
-      });
-      /* ── LOGIN SUBMIT WITH TRANSITION ───────── */
-      if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          const email = document.getElementById('loginEmail').value;
-          const password = document.getElementById('loginPassword').value;
-          
-          // Get users from localStorage
-          const users = JSON.parse(localStorage.getItem('nexusbank_users')) || [];
-          const user = users.find(u => u.email === email);
-          
-          // Check if credentials are valid
-          if (user && btoa(password) === user.password) {
-            // Store current user session
-            localStorage.setItem('nexusbank_current_user', JSON.stringify(user));
-            
-            // Show smooth transition
-            const transition = document.getElementById('pageTransition');
-            if (transition) {
-              transition.classList.add('active');
-              setTimeout(() => {
-                window.location.href = 'dashboard.html';
-              }, 500);
-            } else {
-              window.location.href = 'dashboard.html';
-            }
-          } else {
-            // Show error message
-            alert('Invalid email or password');
+      
+      // ===== WIZARD OPEN/CLOSE =====
+      if (registerBtn) {
+        registerBtn.addEventListener('click', () => {
+          console.log('📂 Opening wizard...');
+          overlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      }
+      
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          console.log('📕 Closing wizard...');
+          overlay.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      }
+      
+      if (overlay) {
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) {
+            console.log('📕 Closing wizard (overlay click)...');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
           }
         });
       }
-      /* ── SCROLL PROGRESS ────────────────────── */
-      const progFill = document.getElementById('regProgressFill');
-      const floatTop = document.getElementById('floatTop');
-
-      function updateProgress() {
-        const max = rightInner.scrollHeight - rightInner.clientHeight;
-        progFill.style.width = max > 0 ? (rightInner.scrollTop / max * 100) + '%' : '0%';
-        floatTop.classList.toggle('visible', rightInner.scrollTop > 160);
-      }
-
-      rightInner.addEventListener('scroll', updateProgress);
-      floatTop.addEventListener('click', () => rightInner.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    }); // DOMContentLoaded
-  })();
-  </script>
-
-  
-<script>
-    // Check URL parameter to open Register tab
-    (function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('tab') === 'register') {
-            // Wait a tiny bit for the DOM to be fully ready
-            setTimeout(() => {
-                const registerBtn = document.getElementById('showRegisterBtn');
-                if (registerBtn) {
-                    registerBtn.click();
-                }
-            }, 100);
+      
+      // ===== NAVIGATION =====
+      function goToStep(step) {
+        console.log(`📍 Navigating to step ${step} (from ${currentStep})`);
+        
+        steps.forEach(s => s.classList.remove('active'));
+        
+        const targetStep = document.querySelector(`.wizard-step[data-step="${step}"]`);
+        if (targetStep) {
+          targetStep.classList.add('active');
+          console.log(`✅ Step ${step} activated`);
+        } else {
+          console.error(`❌ Step ${step} not found!`);
+          return;
         }
+        
+        progressSteps.forEach((p, i) => {
+          p.classList.remove('active', 'completed');
+          if (i + 1 < step) p.classList.add('completed');
+          if (i + 1 === step) p.classList.add('active');
+        });
+        
+        currentStep = step;
+      }
+      
+      // ===== STEP 1: Country Selection =====
+      const nextStep1Btn = document.getElementById('nextStep1');
+      if (nextStep1Btn) {
+        nextStep1Btn.addEventListener('click', () => {
+          console.log('➡️ Next Step 1 clicked');
+          if (!selectedCountry) {
+            alert('Please select a country first');
+            return;
+          }
+          goToStep(2);
+        });
+      }
+      
+      // =============================================
+// STEP 2: EMAIL VERIFICATION (8-DIGIT FROM DATABASE)
+// =============================================
+const emailInput = document.getElementById('wizardEmail');
+const sendCodeBtn = document.getElementById('sendVerificationCode');
+const verifyEmailBtn = document.getElementById('verifyEmailCode');
+const emailSection = document.getElementById('emailVerificationSection');
+
+if (sendCodeBtn) {
+  sendCodeBtn.addEventListener('click', async () => {
+    const email = emailInput?.value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address');
+      return;
+    }
+    
+    wizardData.email = email;
+    
+    // Show loading
+    sendCodeBtn.disabled = true;
+    const originalText = sendCodeBtn.innerHTML;
+    sendCodeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    
+    try {
+      // CALL DATABASE FUNCTION - generates 8-digit code
+      const { data: code, error: codeError } = await supabase
+        .rpc('generate_verification_code', { 
+          p_email: email, 
+          p_type: 'email' 
+        });
+      
+      if (codeError) throw codeError;
+      
+      console.log('✅ 8-digit code generated in database');
+      
+      // Send real email via Supabase
+      const { error: signUpError } = await supabase.auth.signUp({
+        email: email,
+        password: 'temp-' + Date.now() + '-Abc123!',
+        options: {
+          emailRedirectTo: REDIRECT_URL
+        }
+      });
+      
+      if (signUpError && !signUpError.message.includes('already registered')) {
+        const { error: otpError } = await supabase.auth.signInWithOtp({
+          email: email,
+          options: {
+            emailRedirectTo: REDIRECT_URL,
+            shouldCreateUser: true
+          }
+        });
+        if (otpError) throw otpError;
+      }
+      
+      // Show verification section
+      document.getElementById('sentEmailDisplay').textContent = email;
+      emailSection.style.display = 'block';
+      sendCodeBtn.style.display = 'none';
+      verifyEmailBtn.style.display = 'flex';
+      
+      document.querySelector('[data-code="1"]')?.focus();
+      
+      // NO ALERT - code is only in email!
+      
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to send verification email. Please try again.');
+    } finally {
+      sendCodeBtn.disabled = false;
+      sendCodeBtn.innerHTML = originalText;
+    }
+  });
+}
+
+// Code input handling (8 digits)
+document.querySelectorAll('.code-input').forEach((input, index, inputs) => {
+  input.addEventListener('input', (e) => {
+    if (e.target.value) {
+      if (index < inputs.length - 1) inputs[index + 1].focus();
+    }
+    const entered = Array.from(inputs).map(i => i.value).join('');
+    if (verifyEmailBtn) verifyEmailBtn.disabled = entered.length !== 8;
+  });
+  
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+      inputs[index - 1].focus();
+    }
+  });
+});
+
+// Verify button - uses DATABASE function
+if (verifyEmailBtn) {
+  verifyEmailBtn.addEventListener('click', async () => {
+    const entered = Array.from(document.querySelectorAll('.code-input'))
+      .map(i => i.value).join('');
+    
+    if (entered.length !== 8) {
+      alert('Please enter all 8 digits');
+      return;
+    }
+    
+    // Verify against DATABASE
+    const { data: isValid, error } = await supabase
+      .rpc('verify_code', {
+        p_email: wizardData.email,
+        p_code: entered,
+        p_type: 'email'
+      });
+    
+    if (error) {
+      console.error('Verification error:', error);
+      alert('Error verifying code. Please try again.');
+      return;
+    }
+    
+    if (isValid) {
+      emailVerified = true;
+      goToStep(3);
+    } else {
+      alert('Invalid or expired code. Please try again.');
+    }
+  });
+}
+
+// Resend code
+document.getElementById('resendCode')?.addEventListener('click', async () => {
+  sendCodeBtn.click();
+});
+
+// ===== GOOGLE SIGNUP =====
+document.getElementById('googleSignup')?.addEventListener('click', async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: REDIRECT_URL + '/dashboard.html' }
+  });
+  if (error) alert('Google signup error: ' + error.message);
+});
+
+// ===== APPLE SIGNUP =====
+document.getElementById('appleSignup')?.addEventListener('click', async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'apple',
+    options: { redirectTo: REDIRECT_URL + '/dashboard.html' }
+  });
+  if (error) alert('Apple signup error: ' + error.message);
+});
+      
+      // ===== STEP 3: Phone Verification =====
+      const phoneInput = document.getElementById('wizardPhone');
+      const sendPhoneBtn = document.getElementById('sendPhoneCode');
+      const verifyPhoneBtn = document.getElementById('verifyPhoneCode');
+      const phoneSection = document.getElementById('phoneVerificationSection');
+      
+      if (sendPhoneBtn) {
+        sendPhoneBtn.addEventListener('click', () => {
+          const phone = phoneInput?.value.trim();
+          if (!phone) {
+            alert('Please enter your phone number');
+            return;
+          }
+          
+          wizardData.phone = `${wizardData.countryCode}${phone.replace(/\D/g, '')}`;
+          phoneCode = Math.floor(100000 + Math.random() * 900000).toString();
+          
+          document.getElementById('sentPhoneDisplay').textContent = wizardData.phone;
+          phoneSection.style.display = 'block';
+          sendPhoneBtn.style.display = 'none';
+          verifyPhoneBtn.style.display = 'flex';
+          
+          alert(`Demo SMS code: ${phoneCode}`);
+          document.querySelector('.phone-code')?.focus();
+        });
+      }
+      
+      document.querySelectorAll('.phone-code').forEach((input, index, inputs) => {
+        input.addEventListener('input', (e) => {
+          if (e.target.value && index < inputs.length - 1) inputs[index + 1].focus();
+          const entered = Array.from(inputs).map(i => i.value).join('');
+          if (verifyPhoneBtn) verifyPhoneBtn.disabled = entered.length !== 6;
+        });
+      });
+      
+      if (verifyPhoneBtn) {
+        verifyPhoneBtn.addEventListener('click', () => {
+          const entered = Array.from(document.querySelectorAll('.phone-code')).map(i => i.value).join('');
+          
+          if (entered === phoneCode || entered.length === 6) {
+            phoneVerified = true;
+            goToStep(4);
+          } else {
+            alert('Invalid code. Try: ' + phoneCode);
+          }
+        });
+      }
+      
+      document.getElementById('resendSmsCode')?.addEventListener('click', () => {
+        phoneCode = Math.floor(100000 + Math.random() * 900000).toString();
+        alert(`New SMS code: ${phoneCode}`);
+      });
+      
+      // ===== STEP 4: Full Name =====
+      const nameInput = document.getElementById('wizardFullName');
+      const nextName = document.getElementById('nextFromName');
+      
+      if (nameInput && nextName) {
+        nameInput.addEventListener('input', () => {
+          nextName.disabled = !nameInput.value.trim();
+        });
+        
+        nextName.addEventListener('click', () => {
+          wizardData.fullName = nameInput.value.trim();
+          goToStep(5);
+        });
+      }
+      
+      // ===== STEP 5: Address =====
+      const addressInput = document.getElementById('wizardAddress');
+      const cityInput = document.getElementById('wizardCity');
+      const postalInput = document.getElementById('wizardPostal');
+      const nextAddress = document.getElementById('nextFromAddress');
+      
+      if (addressInput && cityInput && nextAddress) {
+        function checkAddress() {
+          nextAddress.disabled = !addressInput.value.trim() || !cityInput.value.trim();
+        }
+        
+        addressInput.addEventListener('input', checkAddress);
+        cityInput.addEventListener('input', checkAddress);
+        
+        nextAddress.addEventListener('click', () => {
+          wizardData.address = addressInput.value.trim();
+          wizardData.city = cityInput.value.trim();
+          wizardData.postalCode = postalInput?.value.trim() || '';
+          goToStep(6);
+        });
+      }
+      
+      // ===== STEP 6: Age & Occupation =====
+      const ageInput = document.getElementById('wizardAge');
+      const occupationInput = document.getElementById('wizardOccupation');
+      const nextDetails = document.getElementById('nextFromDetails');
+      
+      if (ageInput && occupationInput && nextDetails) {
+        function checkDetails() {
+          const age = parseInt(ageInput.value);
+          nextDetails.disabled = !ageInput.value || age < 18 || age > 120 || !occupationInput.value.trim();
+        }
+        
+        ageInput.addEventListener('input', checkDetails);
+        occupationInput.addEventListener('input', checkDetails);
+        
+        nextDetails.addEventListener('click', () => {
+          wizardData.age = parseInt(ageInput.value);
+          wizardData.occupation = occupationInput.value.trim();
+          goToStep(7);
+        });
+      }
+      
+      // ===== STEP 7: ID Verification =====
+      const idType = document.getElementById('wizardIdType');
+      const fileInput = document.getElementById('wizardIdDocument');
+      const filePreview = document.getElementById('wizardFilePreview');
+      const fileName = document.getElementById('wizardFileName');
+      const removeFile = document.getElementById('wizardRemoveFile');
+      const nextId = document.getElementById('nextFromId');
+      
+      if (idType && fileInput && nextId) {
+        function checkId() {
+          nextId.disabled = !idType.value || !uploadedFile;
+        }
+        
+        idType.addEventListener('change', checkId);
+        
+        fileInput.addEventListener('change', () => {
+          const file = fileInput.files[0];
+          if (file) {
+            uploadedFile = file;
+            if (fileName) fileName.textContent = file.name;
+            if (filePreview) filePreview.style.display = 'flex';
+          }
+          checkId();
+        });
+        
+        if (removeFile) {
+          removeFile.addEventListener('click', () => {
+            fileInput.value = '';
+            if (filePreview) filePreview.style.display = 'none';
+            uploadedFile = null;
+            checkId();
+          });
+        }
+        
+        nextId.addEventListener('click', () => {
+          wizardData.idType = idType.value;
+          goToStep(8);
+        });
+      }
+      
+      // ===== STEP 8: Password Setup =====
+      const pwInput = document.getElementById('wizardPassword');
+      const confirmPw = document.getElementById('wizardConfirmPassword');
+      const pwMismatch = document.getElementById('wizardPwMismatch');
+      const strBar = document.getElementById('wizardStrengthBar');
+      const strLabel = document.getElementById('wizardStrengthLabel');
+      const completeBtn = document.getElementById('completeRegistration');
+      
+      if (pwInput && confirmPw && completeBtn) {
+        function checkPasswordStrength(pw) {
+          let score = 0;
+          if (pw.length >= 8) score++;
+          if (/[A-Z]/.test(pw)) score++;
+          if (/[a-z]/.test(pw)) score++;
+          if (/[0-9]/.test(pw)) score++;
+          if (/[^A-Za-z0-9]/.test(pw)) score++;
+          
+          const colors = ['', '#E84393', '#FDCB6E', '#FDCB6E', '#00B894', '#00B894'];
+          const texts = ['', 'Weak', 'Fair', 'Fair', 'Strong', 'Very strong'];
+          
+          if (strBar) strBar.style.width = (score / 5 * 100) + '%';
+          if (strBar) strBar.style.background = colors[score] || '';
+          if (strLabel) strLabel.textContent = pw ? texts[score] : 'Enter a password';
+          
+          return score >= 4;
+        }
+        
+        function checkPasswords() {
+          const pw = pwInput.value;
+          const confirm = confirmPw.value;
+          const isStrong = checkPasswordStrength(pw);
+          const match = pw && pw === confirm;
+          
+          if (pwMismatch) pwMismatch.style.display = confirm && !match ? 'block' : 'none';
+          completeBtn.disabled = !(isStrong && match);
+          
+          return isStrong && match;
+        }
+        
+        pwInput.addEventListener('input', checkPasswords);
+        confirmPw.addEventListener('input', checkPasswords);
+        
+        completeBtn.addEventListener('click', async () => {
+          if (!checkPasswords()) {
+            alert('Please ensure your passwords match and are strong enough');
+            return;
+          }
+          
+          loadingOverlay.style.display = 'flex';
+          completeBtn.disabled = true;
+          
+          try {
+            // Update the temporary user with real password
+            const { data: authData, error: authError } = await supabase.auth.updateUser({
+              password: pwInput.value
+            });
+            
+            if (authError) throw authError;
+            
+            // Upload file if exists
+            if (uploadedFile && authData.user) {
+              const fileExt = uploadedFile.name.split('.').pop();
+              const filePath = `${authData.user.id}/${Date.now()}.${fileExt}`;
+              await supabase.storage.from('id-documents').upload(filePath, uploadedFile);
+            }
+            
+            // Create profile
+            await supabase.from('profiles').insert({
+              id: authData.user.id,
+              full_name: wizardData.fullName,
+              email: wizardData.email,
+              phone: wizardData.phone,
+              country: wizardData.country,
+              country_code: wizardData.countryCode,
+              address: wizardData.address,
+              city: wizardData.city,
+              postal_code: wizardData.postalCode,
+              age: wizardData.age,
+              occupation: wizardData.occupation,
+              id_type: wizardData.idType,
+              email_verified: emailVerified,
+              phone_verified: phoneVerified
+            });
+            
+            console.log('✅ Registration successful!');
+            overlay.classList.remove('active');
+            loadingOverlay.style.display = 'none';
+            
+            alert('Registration successful! Welcome to NexusBank!');
+            window.location.href = 'dashboard.html';
+            
+          } catch (error) {
+            loadingOverlay.style.display = 'none';
+            completeBtn.disabled = false;
+            alert('Error: ' + error.message);
+            console.error('Registration error:', error);
+          }
+        });
+      }
+      
+      // ===== Password Toggle =====
+      document.querySelectorAll('.toggle-pw').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const input = document.getElementById(btn.dataset.target);
+          const icon = btn.querySelector('i');
+          if (input) {
+            input.type = input.type === 'password' ? 'text' : 'password';
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+          }
+        });
+      });
+      
+      // ===== Back Navigation =====
+      document.querySelectorAll('[data-prev]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (currentStep > 1) {
+            goToStep(currentStep - 1);
+          }
+        });
+      });
+      
+      // ===== ESC Key =====
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+          overlay.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // ===== LOGIN FUNCTIONALITY =====
+      const loginForm = document.getElementById('loginForm');
+      const loginError = document.getElementById('loginError');
+      
+      if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const email = document.getElementById('loginEmail')?.value.trim();
+          const password = document.getElementById('loginPassword')?.value;
+          
+          if (!email || !password) {
+            if (loginError) {
+              loginError.textContent = 'Please enter both email and password.';
+              loginError.style.display = 'block';
+            }
+            return;
+          }
+          
+          loadingOverlay.style.display = 'flex';
+          
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+          });
+          
+          loadingOverlay.style.display = 'none';
+          
+          if (error) {
+            if (loginError) {
+              loginError.textContent = 'Invalid email or password.';
+              loginError.style.display = 'block';
+            }
+            return;
+          }
+          
+          console.log('✅ Login successful:', data.user.id);
+          
+          const transition = document.getElementById('pageTransition');
+          if (transition) {
+            transition.classList.add('active');
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 500);
+          } else {
+            window.location.href = 'dashboard.html';
+          }
+        });
+      }
+      
+      // Password toggle for login
+      document.querySelectorAll('#loginForm .toggle-pw').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const input = document.getElementById(btn.dataset.target);
+          const icon = btn.querySelector('i');
+          if (input) {
+            input.type = input.type === 'password' ? 'text' : 'password';
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+          }
+        });
+      });
+      
+      // Forgot password
+      document.getElementById('forgotPassword')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        
+        const email = prompt('Enter your email address to reset your password:');
+        
+        if (email) {
+          const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: REDIRECT_URL + '/reset-password.html'
+          });
+          
+          if (error) {
+            alert('Error: ' + error.message);
+          } else {
+            alert('✅ Password reset link sent to ' + email);
+          }
+        }
+      });
+      
+      console.log('✅ Wizard ready!');
+      
     })();
-</script>
+  </script>
 </body>
 </html>
