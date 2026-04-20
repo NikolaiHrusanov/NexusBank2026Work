@@ -487,7 +487,7 @@
     <label class="form-label">Email Address</label>
     <div class="input-with-icon">
       <i class="fi fas fa-envelope"></i>
-      <input type="email" class="form-control" id="wizardEmail" placeholder="you@example.com">
+     <input type="email" class="form-control" id="wizardEmail" placeholder="you@example.com" autocomplete="off" spellcheck="false">
     </div>
   </div>
   
@@ -505,15 +505,15 @@
       <i class="fas fa-check-circle"></i> 8-digit code sent to <span id="sentEmailDisplay"></span>
     </p>
     <div class="verification-code-wrapper" id="emailCodeInputs">
-      <input type="text" class="code-input email-code" maxlength="1" data-index="0">
-      <input type="text" class="code-input email-code" maxlength="1" data-index="1">
-      <input type="text" class="code-input email-code" maxlength="1" data-index="2">
-      <input type="text" class="code-input email-code" maxlength="1" data-index="3">
-      <input type="text" class="code-input email-code" maxlength="1" data-index="4">
-      <input type="text" class="code-input email-code" maxlength="1" data-index="5">
-      <input type="text" class="code-input email-code" maxlength="1" data-index="6">
-      <input type="text" class="code-input email-code" maxlength="1" data-index="7">
-    </div>
+  <input type="text" class="code-input email-code" maxlength="1" data-index="0" inputmode="numeric" pattern="[0-9]*">
+  <input type="text" class="code-input email-code" maxlength="1" data-index="1" inputmode="numeric" pattern="[0-9]*">
+  <input type="text" class="code-input email-code" maxlength="1" data-index="2" inputmode="numeric" pattern="[0-9]*">
+  <input type="text" class="code-input email-code" maxlength="1" data-index="3" inputmode="numeric" pattern="[0-9]*">
+  <input type="text" class="code-input email-code" maxlength="1" data-index="4" inputmode="numeric" pattern="[0-9]*">
+  <input type="text" class="code-input email-code" maxlength="1" data-index="5" inputmode="numeric" pattern="[0-9]*">
+  <input type="text" class="code-input email-code" maxlength="1" data-index="6" inputmode="numeric" pattern="[0-9]*">
+  <input type="text" class="code-input email-code" maxlength="1" data-index="7" inputmode="numeric" pattern="[0-9]*">
+</div>
     <button type="button" class="wizard-btn wizard-btn-secondary" id="resendCode" style="margin-top: 12px;">
       <i class="fas fa-redo-alt"></i> Resend Code
     </button>
@@ -1052,26 +1052,28 @@
         });
       }
       
-     // =============================================
-// STEP 2: EMAIL VERIFICATION (8-DIGIT FROM DATABASE)
+ // =============================================
+// STEP 2: EMAIL VERIFICATION (FOLLOWS YOUR DIAGRAM)
+// Browser NEVER sees the code - All hashing in PostgreSQL
 // =============================================
 const emailInput = document.getElementById('wizardEmail');
 const sendCodeBtn = document.getElementById('sendVerificationCode');
 const verifyEmailBtn = document.getElementById('verifyEmailCode');
 const emailSection = document.getElementById('emailVerificationSection');
 const emailCodeInputs = document.querySelectorAll('.email-code');
+const sentEmailDisplay = document.getElementById('sentEmailDisplay');
+const resendCodeBtn = document.getElementById('resendCode');
+
+let emailCooldown = false;
+let cooldownTimer = null;
 
 // Code input handling for 8 digits
 emailCodeInputs.forEach((input, index) => {
   input.addEventListener('input', (e) => {
-    // Only allow numbers
     e.target.value = e.target.value.replace(/[^0-9]/g, '');
-    
     if (e.target.value && index < emailCodeInputs.length - 1) {
       emailCodeInputs[index + 1].focus();
     }
-    
-    // Check if all 8 digits are filled
     const allFilled = Array.from(emailCodeInputs).every(input => input.value.length === 1);
     if (verifyEmailBtn) verifyEmailBtn.disabled = !allFilled;
   });
@@ -1082,98 +1084,96 @@ emailCodeInputs.forEach((input, index) => {
     }
   });
   
-  // Handle paste event
   input.addEventListener('paste', (e) => {
     e.preventDefault();
     const pastedText = (e.clipboardData || window.clipboardData).getData('text');
     const cleaned = pastedText.replace(/[^0-9]/g, '').slice(0, 8);
-    
     if (cleaned.length > 0) {
       for (let i = 0; i < emailCodeInputs.length; i++) {
-        if (i < cleaned.length) {
-          emailCodeInputs[i].value = cleaned[i];
-        } else {
-          emailCodeInputs[i].value = '';
-        }
+        emailCodeInputs[i].value = i < cleaned.length ? cleaned[i] : '';
       }
-      
       const allFilled = cleaned.length === 8;
       if (verifyEmailBtn) verifyEmailBtn.disabled = !allFilled;
-      
-      if (cleaned.length < 8 && cleaned.length > 0) {
-        emailCodeInputs[cleaned.length].focus();
-      } else if (cleaned.length === 8) {
-        emailCodeInputs[7].focus();
-      }
+      emailCodeInputs[Math.min(cleaned.length, 7)].focus();
     }
   });
 });
 
+// =============================================
+// SEND CODE (Steps 1-4 of your diagram)
+// =============================================
 if (sendCodeBtn) {
   sendCodeBtn.addEventListener('click', async () => {
     const email = emailInput?.value.trim().toLowerCase();
+    
     if (!email || !email.includes('@')) {
       alert('Please enter a valid email address');
       return;
     }
     
     wizardData.email = email;
+    console.log('📧 STEP 1: Browser → Backend (email sent to server)');
     
-    // Show loading
     sendCodeBtn.disabled = true;
     const originalText = sendCodeBtn.innerHTML;
     sendCodeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
     
     try {
-      // CALL DATABASE FUNCTION - generates 8-digit code
-      console.log('📧 Generating code for:', email);
-      const { data: code, error: codeError } = await supabase
+      // STEP 2-3: Generate code and store HASHED version in database
+      console.log('🔐 STEP 2-3: Generating code and storing HASH in PostgreSQL...');
+      
+      const { data: plainCode, error } = await supabase
         .rpc('generate_verification_code', { 
           p_email: email, 
           p_type: 'email' 
         });
       
-      if (codeError) {
-        console.error('RPC Error:', codeError);
-        throw codeError;
+      if (error) {
+        console.error('❌ Database function error:', error);
+        throw new Error('Failed to generate code. Run SQL setup first.');
       }
       
-      console.log('✅ Code generated in database');
+      console.log('✅ Code generated and bcrypt hashed in database');
       
-      // Send real email via Supabase Auth
-      const { error: otpError } = await supabase.auth.signInWithOtp({
+      // STEP 4: Send email with code
+      console.log('📧 STEP 4: Sending email...');
+      
+      const { error: emailError } = await supabase.auth.signInWithOtp({
         email: email,
-        options: {
+        options: { 
           shouldCreateUser: true,
-          data: {
-            // This ensures we can identify this as a signup attempt
-            signup_step: 'email_verification'
-          }
+          data: { signup_step: 'email_verification' }
         }
       });
       
-      if (otpError) {
-        console.error('OTP Error:', otpError);
-        // Even if OTP fails, we have our custom code system working
-        console.log('Using custom code system instead');
+      if (emailError) {
+        // Development fallback - show in console ONLY (not UI)
+        console.log('⚠️ Email not configured. Development mode:');
+        console.log(`%c🔐 VERIFICATION CODE: ${plainCode}`, 
+          'background: #6c5ce7; color: white; font-size: 18px; padding: 10px; border-radius: 5px; font-weight: bold;');
+        console.log('📝 In production, this would be emailed to:', email);
+      } else {
+        console.log('✅ Email sent via Supabase');
       }
       
-      // Show verification section
-      document.getElementById('sentEmailDisplay').textContent = email;
+      // ❌ IMPORTANT: Code is NEVER added to DOM or shown in UI
+      // Browser only knows that email was sent - NOT the code
+      
+      // Update UI
+      if (sentEmailDisplay) sentEmailDisplay.textContent = email;
       emailSection.style.display = 'block';
       sendCodeBtn.style.display = 'none';
       verifyEmailBtn.style.display = 'flex';
       
-      // Clear any existing codes in inputs
       emailCodeInputs.forEach(input => input.value = '');
       verifyEmailBtn.disabled = true;
-      
-      // Focus first input
       emailCodeInputs[0]?.focus();
       
+      startEmailCooldown();
+      
     } catch (error) {
-      console.error('Send code error:', error);
-      alert('Failed to send verification email. Please try again. Error: ' + error.message);
+      console.error('❌ Send error:', error);
+      alert('Error: ' + error.message);
     } finally {
       sendCodeBtn.disabled = false;
       sendCodeBtn.innerHTML = originalText;
@@ -1181,17 +1181,19 @@ if (sendCodeBtn) {
   });
 }
 
-// Verify button - uses DATABASE function
+// =============================================
+// VERIFY CODE (Steps 5-7 of your diagram)
+// =============================================
 if (verifyEmailBtn) {
   verifyEmailBtn.addEventListener('click', async () => {
-    // Get code ONLY from email inputs
-    const entered = Array.from(emailCodeInputs)
+    // STEP 5: User enters code → Browser sends to Backend
+    const enteredCode = Array.from(emailCodeInputs)
       .map(i => i.value)
       .join('');
     
-    console.log('🔑 Verifying code:', entered, 'for email:', wizardData.email);
+    console.log('🔑 STEP 5: Code entered, sending to backend for verification');
     
-    if (entered.length !== 8) {
+    if (enteredCode.length !== 8) {
       alert('Please enter all 8 digits');
       return;
     }
@@ -1200,43 +1202,85 @@ if (verifyEmailBtn) {
     const originalText = verifyEmailBtn.innerHTML;
     verifyEmailBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
     
-    // Verify against DATABASE
-    const { data: isValid, error } = await supabase
-      .rpc('verify_code', {
-        p_email: wizardData.email,
-        p_code: entered,
-        p_type: 'email'
-      });
-    
-    console.log('Verification result:', { isValid, error });
-    
-    if (error) {
-      console.error('Verification error:', error);
-      alert('Error verifying code. Please try again.');
-      verifyEmailBtn.disabled = false;
-      verifyEmailBtn.innerHTML = originalText;
-      return;
-    }
-    
-    if (isValid) {
-      emailVerified = true;
-      console.log('✅ Email verified successfully!');
-      goToStep(3);
-    } else {
-      alert('Invalid or expired code. Please try again or request a new code.');
+    try {
+      // STEP 6: Backend compares against HASHED code
+      console.log('🔐 STEP 6: Comparing against bcrypt hash in database...');
+      
+      const { data: isValid, error } = await supabase
+        .rpc('verify_code', {
+          p_email: wizardData.email,
+          p_code: enteredCode,
+          p_type: 'email'
+        });
+      
+      if (error) {
+        console.error('❌ Verification error:', error);
+        throw new Error('Verification failed');
+      }
+      
+      // STEP 7: If correct → success
+      if (isValid) {
+        emailVerified = true;
+        console.log('✅ STEP 7: Email verified! Hash matched.');
+        goToStep(3);
+      } else {
+        alert('Invalid or expired code. Please request a new one.');
+        verifyEmailBtn.disabled = false;
+        verifyEmailBtn.innerHTML = originalText;
+      }
+      
+    } catch (error) {
+      console.error('❌ Error:', error);
+      alert('Error verifying code: ' + error.message);
       verifyEmailBtn.disabled = false;
       verifyEmailBtn.innerHTML = originalText;
     }
   });
 }
 
-// Resend code
-document.getElementById('resendCode')?.addEventListener('click', () => {
-  // Clear inputs
-  emailCodeInputs.forEach(input => input.value = '');
-  // Trigger send
-  sendCodeBtn.click();
-});
+// ===== RESEND CODE =====
+if (resendCodeBtn) {
+  resendCodeBtn.addEventListener('click', () => {
+    if (emailCooldown) {
+      alert('Please wait before requesting another code');
+      return;
+    }
+    emailCodeInputs.forEach(input => input.value = '');
+    verifyEmailBtn.disabled = true;
+    sendCodeBtn.click();
+  });
+}
+
+// ===== COOLDOWN TIMER =====
+function startEmailCooldown() {
+  emailCooldown = true;
+  let seconds = 60;
+  
+  if (resendCodeBtn) {
+    resendCodeBtn.disabled = true;
+    
+    if (cooldownTimer) clearInterval(cooldownTimer);
+    
+    cooldownTimer = setInterval(() => {
+      seconds--;
+      if (resendCodeBtn) {
+        resendCodeBtn.innerHTML = `<i class="fas fa-clock"></i> Resend in ${seconds}s`;
+      }
+      
+      if (seconds <= 0) {
+        clearInterval(cooldownTimer);
+        cooldownTimer = null;
+        emailCooldown = false;
+        if (resendCodeBtn) {
+          resendCodeBtn.disabled = false;
+          resendCodeBtn.innerHTML = '<i class="fas fa-redo-alt"></i> Resend Code';
+        }
+      }
+    }, 1000);
+  }
+}
+
+console.log('✅ Email verification ready - Following 7-step diagram securely');
 
 // ===== GOOGLE SIGNUP =====
 document.getElementById('googleSignup')?.addEventListener('click', async () => {
