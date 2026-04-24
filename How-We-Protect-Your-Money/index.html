@@ -62,13 +62,13 @@
         }
 
         body {
-            font-family: var(--font-body);
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            padding-top: 94px;
-            overflow-x: hidden;
-        }
+    font-family: var(--font-body);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding-top: 94px;
+    overflow-x: hidden;
+}
 
         /* Focus indicators for keyboard users */
         :focus-visible {
@@ -1644,6 +1644,1116 @@
     }
 }
 
+/* ===== NEXUSBANK SECURE SECTION - ENHANCED ===== */
+.secure-section {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+/* Animated gradient background */
+.secure-bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse 80% 50% at 50% 40%, rgba(129, 140, 248, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(34, 211, 238, 0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 20% 70%, rgba(167, 139, 250, 0.05) 0%, transparent 60%);
+    animation: bgPulse 8s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* Grid overlay */
+.secure-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(129, 140, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(129, 140, 248, 0.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black 25%, transparent 65%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black 25%, transparent 65%);
+    animation: gridDrift 15s linear infinite;
+}
+
+@keyframes gridDrift {
+    0% { background-position: 0 0; }
+    100% { background-position: 50px 25px; }
+}
+
+/* Floating particles */
+.secure-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.secure-particle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+.particle-a { width: 3px; height: 3px; background: var(--accent); top: 20%; left: 15%; animation: particleFloat1 6s ease-in-out infinite; }
+.particle-b { width: 2px; height: 2px; background: var(--primary); top: 30%; right: 20%; animation: particleFloat2 7s ease-in-out infinite 0.5s; }
+.particle-c { width: 4px; height: 4px; background: var(--secondary); bottom: 35%; left: 25%; animation: particleFloat3 8s ease-in-out infinite 1s; }
+.particle-d { width: 2px; height: 2px; background: var(--accent); top: 45%; right: 15%; animation: particleFloat1 9s ease-in-out infinite 1.5s; }
+.particle-e { width: 3px; height: 3px; background: var(--primary); bottom: 25%; right: 30%; animation: particleFloat2 6.5s ease-in-out infinite 2s; }
+.particle-f { width: 2px; height: 2px; background: var(--secondary); top: 55%; left: 8%; animation: particleFloat3 7.5s ease-in-out infinite 0.8s; }
+
+@keyframes particleFloat1 {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+    20% { opacity: 0.8; }
+    50% { transform: translate(30px, -50px) scale(2.5); opacity: 0.4; }
+    80% { opacity: 0.8; }
+}
+
+@keyframes particleFloat2 {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+    25% { opacity: 0.7; }
+    60% { transform: translate(-25px, -60px) scale(3); opacity: 0.3; }
+    85% { opacity: 0.7; }
+}
+
+@keyframes particleFloat3 {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+    30% { opacity: 0.6; }
+    55% { transform: translate(20px, -45px) scale(2); opacity: 0.5; }
+    90% { opacity: 0.6; }
+}
+
+/* Container */
+.secure-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    width: 100%;
+}
+
+/* Left Content */
+.secure-content {
+    flex: 1;
+    max-width: 520px;
+    z-index: 3;
+}
+
+.secure-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(129, 140, 248, 0.08);
+    border: 1px solid rgba(129, 140, 248, 0.2);
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    margin-bottom: 32px;
+    backdrop-filter: blur(10px);
+    animation: badgeIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.secure-badge i {
+    font-size: 0.9rem;
+    animation: iconShimmer 2s ease-in-out infinite;
+}
+
+@keyframes iconShimmer {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+@keyframes badgeIn {
+    from { opacity: 0; transform: translateY(10px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.secure-headline {
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 30%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1.5px;
+    animation: headlineIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s forwards;
+    opacity: 0;
+}
+
+@keyframes headlineIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.secure-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 12px;
+    animation: textIn 0.8s ease 0.25s forwards;
+    opacity: 0;
+}
+
+.secure-subtext {
+    font-size: 0.95rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    margin-bottom: 40px;
+    animation: textIn 0.8s ease 0.35s forwards;
+    opacity: 0;
+}
+
+@keyframes textIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* CTA Button */
+.secure-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #a78bfa 100%);
+    background-size: 200% 200%;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 16px 36px;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 24px rgba(129, 140, 248, 0.3), 0 0 0 0 rgba(129, 140, 248, 0.4);
+    animation: ctaIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.45s forwards, shimmer 3s ease-in-out infinite;
+    opacity: 0;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.secure-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.5s;
+}
+
+.secure-cta:hover::before {
+    left: 100%;
+}
+
+.secure-cta:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 40px rgba(129, 140, 248, 0.5), 0 0 0 8px rgba(129, 140, 248, 0.08);
+    background-position: 100% 50%;
+}
+
+.secure-cta:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+@keyframes ctaIn {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.secure-cta i {
+    transition: transform 0.3s ease;
+}
+
+.secure-cta:hover i {
+    transform: translateX(4px);
+}
+
+/* Right Visual */
+.secure-visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 550px;
+}
+
+/* Main Security Orb */
+.security-orb {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: orbAppear 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s forwards;
+    opacity: 0;
+    transform: scale(0.7);
+}
+
+@keyframes orbAppear {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Glow layers */
+.orb-glow-outer {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(129, 140, 248, 0.15) 0%, rgba(34, 211, 238, 0.08) 30%, transparent 70%);
+    border-radius: 50%;
+    animation: glowBreath 4s ease-in-out infinite;
+}
+
+.orb-glow-inner {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.2) 0%, transparent 60%);
+    border-radius: 50%;
+    animation: glowBreath 3s ease-in-out infinite 0.5s;
+}
+
+@keyframes glowBreath {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.25); opacity: 1; }
+}
+
+/* Rings */
+.orb-ring {
+    position: absolute;
+    border-radius: 50%;
+    border-style: solid;
+}
+
+.ring-1 {
+    width: 260px;
+    height: 260px;
+    border: 1.5px solid rgba(129, 140, 248, 0.25);
+    animation: ringSpin 10s linear infinite;
+}
+
+.ring-2 {
+    width: 210px;
+    height: 210px;
+    border: 1px dashed rgba(167, 139, 250, 0.2);
+    animation: ringSpin 7s linear infinite reverse;
+}
+
+.ring-3 {
+    width: 160px;
+    height: 160px;
+    border: 2px solid rgba(34, 211, 238, 0.1);
+    animation: ringSpin 5s linear infinite;
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.05), inset 0 0 20px rgba(34, 211, 238, 0.02);
+}
+
+@keyframes ringSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Core */
+.orb-core {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1.5px solid rgba(129, 140, 248, 0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(25px);
+    box-shadow: 
+        0 0 50px rgba(129, 140, 248, 0.2),
+        0 0 100px rgba(129, 140, 248, 0.1),
+        inset 0 0 30px rgba(129, 140, 248, 0.08);
+    z-index: 2;
+    animation: corePulse 3s ease-in-out infinite;
+}
+
+@keyframes corePulse {
+    0%, 100% { box-shadow: 0 0 50px rgba(129, 140, 248, 0.2), 0 0 100px rgba(129, 140, 248, 0.1), inset 0 0 30px rgba(129, 140, 248, 0.08); }
+    50% { box-shadow: 0 0 70px rgba(129, 140, 248, 0.35), 0 0 140px rgba(129, 140, 248, 0.18), inset 0 0 40px rgba(129, 140, 248, 0.15); }
+}
+
+.orb-core i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    filter: drop-shadow(0 0 20px rgba(129, 140, 248, 0.6));
+    animation: shieldBeat 2s ease-in-out infinite;
+}
+
+@keyframes shieldBeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.12); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.08); }
+    60% { transform: scale(1); }
+}
+
+/* Orbiting dots */
+.orb-dot {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.7), 0 0 30px rgba(34, 211, 238, 0.3);
+}
+
+.dot-1 { top: 5px; left: 50%; animation: orbitTop 3s ease-in-out infinite; }
+.dot-2 { right: 5px; top: 50%; animation: orbitRight 4s ease-in-out infinite 0.5s; }
+.dot-3 { bottom: 5px; left: 50%; animation: orbitBottom 3.5s ease-in-out infinite 1s; }
+
+@keyframes orbitTop {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-12px); }
+}
+
+@keyframes orbitRight {
+    0%, 100% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-50%) translateX(-12px); }
+}
+
+@keyframes orbitBottom {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(12px); }
+}
+
+/* Floating UI Cards */
+.secure-card {
+    position: absolute;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(129, 140, 248, 0.2);
+    border-radius: var(--radius-xl);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(129, 140, 248, 0.08);
+    z-index: 3;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.secure-card:hover {
+    transform: translateY(-5px) scale(1.06) !important;
+    border-color: rgba(129, 140, 248, 0.5);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(129, 140, 248, 0.2);
+}
+
+.card-icon {
+    width: 42px;
+    height: 42px;
+    background: rgba(129, 140, 248, 0.1);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid rgba(129, 140, 248, 0.15);
+}
+
+.card-icon i {
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.card-label {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-status {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.card-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.card-indicator.green {
+    background: var(--success);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.6), 0 0 24px rgba(16, 185, 129, 0.2);
+    animation: indicatorGlow 2s ease-in-out infinite;
+}
+
+.card-indicator.pulse {
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.6), 0 0 24px rgba(34, 211, 238, 0.2);
+    animation: indicatorPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes indicatorGlow {
+    0%, 100% { box-shadow: 0 0 12px rgba(16, 185, 129, 0.6), 0 0 24px rgba(16, 185, 129, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.9), 0 0 40px rgba(16, 185, 129, 0.4); }
+}
+
+@keyframes indicatorPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.card-lock {
+    top: 2%;
+    right: 0;
+    animation: floatCard1 5s ease-in-out infinite;
+}
+
+.card-toggle {
+    bottom: 18%;
+    left: -10px;
+    animation: floatCard2 5.5s ease-in-out infinite 0.8s;
+}
+
+.card-notify {
+    bottom: 0;
+    right: 8%;
+    animation: floatCard1 6s ease-in-out infinite 0.4s;
+}
+
+@keyframes floatCard1 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes floatCard2 {
+    0%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    80% { transform: translateY(-4px); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .secure-container { gap: 40px; }
+    .secure-headline { font-size: 2.5rem; }
+    .security-orb { width: 240px; height: 240px; }
+    .orb-glow-outer { width: 220px; height: 220px; }
+    .orb-glow-inner { width: 140px; height: 140px; }
+    .orb-core { width: 90px; height: 90px; }
+    .orb-core i { font-size: 2rem; }
+    .ring-1 { width: 210px; height: 210px; }
+    .ring-2 { width: 170px; height: 170px; }
+    .ring-3 { width: 130px; height: 130px; }
+    .secure-card { padding: 12px 16px; gap: 10px; }
+    .card-icon { width: 34px; height: 34px; }
+    .card-icon i { font-size: 0.95rem; }
+    .card-status { font-size: 0.8rem; }
+}
+
+@media (max-width: 768px) {
+    .secure-section { padding: 60px 24px; min-height: auto; }
+    .secure-container { flex-direction: column; text-align: center; gap: 60px; }
+    .secure-content { max-width: 100%; }
+    .secure-headline { font-size: 2.2rem; }
+    .secure-description { font-size: 1rem; }
+    .secure-visual { min-height: 400px; width: 100%; }
+    .security-orb { width: 200px; height: 200px; }
+    .orb-glow-outer { width: 180px; height: 180px; }
+    .orb-glow-inner { width: 120px; height: 120px; }
+    .orb-core { width: 75px; height: 75px; }
+    .orb-core i { font-size: 1.6rem; }
+    .ring-1 { width: 175px; height: 175px; }
+    .ring-2 { width: 140px; height: 140px; }
+    .ring-3 { width: 105px; height: 105px; }
+    .card-lock { top: 0; right: 0; }
+    .card-toggle { bottom: 22%; left: 0; }
+    .card-notify { bottom: 0; right: 0; }
+    .secure-card { padding: 10px 14px; gap: 8px; }
+    .card-icon { width: 30px; height: 30px; }
+    .card-label { font-size: 0.65rem; }
+    .card-status { font-size: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+    .secure-section { padding: 40px 16px; }
+    .secure-headline { font-size: 1.8rem; }
+    .secure-description { font-size: 0.9rem; }
+    .secure-subtext { font-size: 0.85rem; }
+    .secure-cta { font-size: 0.95rem; padding: 14px 28px; }
+    .secure-visual { min-height: 320px; }
+    .security-orb { width: 160px; height: 160px; }
+    .orb-glow-outer { width: 145px; height: 145px; }
+    .orb-glow-inner { width: 95px; height: 95px; }
+    .orb-core { width: 60px; height: 60px; }
+    .orb-core i { font-size: 1.3rem; }
+    .ring-1 { width: 140px; height: 140px; }
+    .ring-2 { width: 115px; height: 115px; }
+    .ring-3 { width: 85px; height: 85px; }
+    .orb-dot { width: 5px; height: 5px; }
+    .secure-card { padding: 8px 10px; gap: 6px; }
+    .card-icon { width: 26px; height: 26px; }
+    .card-icon i { font-size: 0.7rem; }
+}
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0.5;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+}
+
+.divider-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(129, 140, 248, 0.4);
+}
+
+/* ===== PEACE OF MIND SECTION ===== */
+.peace-section {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 24px;
+    overflow: hidden;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+/* Background dots */
+.peace-bg-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(129, 140, 248, 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 60% 50% at 60% 40%, black 20%, transparent 60%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 60% 40%, black 20%, transparent 60%);
+    animation: dotsDrift 25s linear infinite;
+}
+
+@keyframes dotsDrift {
+    0% { background-position: 0 0; }
+    100% { background-position: -40px 20px; }
+}
+
+/* Background lines */
+.peace-bg-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.peace-line {
+    position: absolute;
+    width: 1px;
+    height: 30%;
+    background: linear-gradient(180deg, transparent, rgba(129, 140, 248, 0.2), transparent);
+}
+
+.line-1 {
+    left: 25%;
+    top: 15%;
+    animation: lineMove 8s ease-in-out infinite;
+}
+
+.line-2 {
+    left: 35%;
+    top: 50%;
+    height: 25%;
+    animation: lineMove 10s ease-in-out infinite 1s;
+}
+
+.line-3 {
+    left: 20%;
+    top: 35%;
+    height: 20%;
+    animation: lineMove 9s ease-in-out infinite 0.5s;
+}
+
+@keyframes lineMove {
+    0%, 100% { transform: translateY(0); opacity: 0.3; }
+    50% { transform: translateY(30px); opacity: 0.6; }
+}
+
+/* Container */
+.peace-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    width: 100%;
+    flex-direction: row-reverse;
+}
+
+/* Right Content */
+.peace-content {
+    flex: 1;
+    max-width: 520px;
+    z-index: 3;
+}
+
+.peace-headline {
+    font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+    letter-spacing: -1.5px;
+    animation: peaceHeadlineIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    opacity: 0;
+}
+
+.peace-highlight {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+@keyframes peaceHeadlineIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.peace-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 12px;
+    animation: peaceTextIn 0.7s ease 0.15s forwards;
+    opacity: 0;
+}
+
+.peace-subtext {
+    font-size: 0.95rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    margin-bottom: 40px;
+    animation: peaceTextIn 0.7s ease 0.25s forwards;
+    opacity: 0;
+}
+
+@keyframes peaceTextIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* CTA Button */
+.peace-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 16px 36px;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1.5px solid var(--border-medium);
+    animation: peaceTextIn 0.7s ease 0.35s forwards;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.peace-cta:hover {
+    background: rgba(129, 140, 248, 0.1);
+    border-color: var(--primary);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 30px rgba(129, 140, 248, 0.2);
+    color: var(--primary);
+}
+
+.peace-cta:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+.peace-cta i {
+    transition: transform 0.3s ease;
+}
+
+.peace-cta:hover i {
+    transform: translateX(4px);
+}
+
+/* ===== LEFT VISUAL ===== */
+.peace-visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 500px;
+}
+
+/* Main shield card */
+.peace-shield-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 23, 42, 0.85);
+    border: 1.5px solid rgba(129, 140, 248, 0.3);
+    border-radius: var(--radius-2xl);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 40px rgba(129, 140, 248, 0.1);
+    z-index: 4;
+    animation: shieldCardIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s forwards;
+    opacity: 0;
+}
+
+@keyframes shieldCardIn {
+    from { opacity: 0; transform: translate(-50%, -50%) translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translate(-50%, -50%) translateY(0) scale(1); }
+}
+
+.peace-shield-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, rgba(129, 140, 248, 0.2), rgba(167, 139, 250, 0.2));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(129, 140, 248, 0.3);
+}
+
+.peace-shield-icon i {
+    font-size: 1.5rem;
+    color: var(--primary);
+    animation: shieldPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes shieldPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.peace-shield-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.peace-shield-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.peace-shield-status {
+    font-size: 0.8rem;
+    color: var(--success);
+    font-weight: 500;
+}
+
+.peace-shield-check {
+    width: 28px;
+    height: 28px;
+    background: rgba(16, 185, 129, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: checkGlow 2s ease-in-out infinite;
+}
+
+.peace-shield-check i {
+    font-size: 1rem;
+    color: var(--success);
+}
+
+@keyframes checkGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.6); }
+}
+
+/* Transaction cards */
+.peace-tx-card {
+    position: absolute;
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(129, 140, 248, 0.15);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.peace-tx-card:hover {
+    transform: translateY(-3px) !important;
+    border-color: rgba(129, 140, 248, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(129, 140, 248, 0.1);
+}
+
+.tx-card-1 {
+    top: 10%;
+    right: 15%;
+    animation: txCardIn 0.6s ease 0.5s forwards;
+    opacity: 0;
+}
+
+.tx-card-2 {
+    bottom: 15%;
+    left: 10%;
+    animation: txCardIn 0.6s ease 0.7s forwards;
+    opacity: 0;
+}
+
+@keyframes txCardIn {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tx-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(129, 140, 248, 0.1);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tx-icon i {
+    font-size: 0.9rem;
+    color: var(--primary);
+}
+
+.tx-icon.received {
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.tx-icon.received i {
+    color: var(--success);
+}
+
+.tx-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.tx-name {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.tx-amount {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.tx-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+}
+
+.tx-badge.safe {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+/* Notification popup */
+.peace-notification {
+    position: absolute;
+    top: 8%;
+    left: 10%;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: var(--radius-xl);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+    z-index: 5;
+    animation: notifIn 0.5s ease 0.9s forwards, notifFloat 4s ease-in-out 1.4s infinite;
+    opacity: 0;
+}
+
+@keyframes notifIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes notifFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.notif-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notif-icon i {
+    font-size: 0.9rem;
+    color: var(--error);
+    animation: bellRing 2s ease-in-out 1.5s infinite;
+}
+
+@keyframes bellRing {
+    0%, 100% { transform: rotate(0); }
+    5% { transform: rotate(15deg); }
+    10% { transform: rotate(-15deg); }
+    15% { transform: rotate(10deg); }
+    20% { transform: rotate(-10deg); }
+    25% { transform: rotate(0); }
+}
+
+.notif-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.notif-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--error);
+}
+
+.notif-text {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.notif-time {
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+}
+
+/* Activity dot */
+.peace-activity-dot {
+    position: absolute;
+    bottom: 20%;
+    right: 20%;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.6);
+    z-index: 2;
+    animation: activityPulse 2s ease-in-out infinite;
+}
+
+@keyframes activityPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(2.5); opacity: 0.2; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .peace-container { gap: 40px; }
+    .peace-headline { font-size: 2.5rem; }
+    .peace-visual { min-height: 450px; }
+}
+
+@media (max-width: 768px) {
+    .peace-section { padding: 60px 24px; min-height: auto; }
+    .peace-container { flex-direction: column-reverse; text-align: center; gap: 60px; }
+    .peace-content { max-width: 100%; }
+    .peace-headline { font-size: 2.2rem; }
+    .peace-description { font-size: 1rem; }
+    .peace-visual { min-height: 380px; width: 100%; }
+    .peace-shield-card { padding: 18px 20px; gap: 12px; }
+    .peace-shield-icon { width: 42px; height: 42px; }
+    .peace-shield-icon i { font-size: 1.2rem; }
+    .peace-tx-card { padding: 10px 14px; gap: 8px; }
+    .tx-icon { width: 32px; height: 32px; }
+    .tx-icon i { font-size: 0.75rem; }
+    .tx-card-1 { top: 5%; right: 5%; }
+    .tx-card-2 { bottom: 12%; left: 5%; }
+    .peace-notification { top: 5%; left: 5%; padding: 10px 14px; gap: 8px; }
+    .notif-icon { width: 30px; height: 30px; }
+}
+
+@media (max-width: 480px) {
+    .peace-section { padding: 40px 16px; }
+    .peace-headline { font-size: 1.8rem; }
+    .peace-description { font-size: 0.9rem; }
+    .peace-subtext { font-size: 0.85rem; }
+    .peace-cta { font-size: 0.95rem; padding: 14px 24px; }
+    .peace-visual { min-height: 300px; }
+    .peace-shield-card { padding: 14px 16px; gap: 10px; }
+    .peace-shield-icon { width: 36px; height: 36px; }
+    .peace-shield-icon i { font-size: 1rem; }
+    .peace-shield-title { font-size: 0.85rem; }
+    .peace-shield-status { font-size: 0.7rem; }
+    .peace-tx-card { padding: 8px 10px; gap: 6px; }
+    .tx-icon { width: 28px; height: 28px; }
+    .tx-name { font-size: 0.7rem; }
+    .tx-amount { font-size: 0.8rem; }
+    .tx-badge { font-size: 0.6rem; padding: 3px 8px; }
+    .peace-notification { padding: 8px 10px; gap: 6px; }
+    .notif-icon { width: 26px; height: 26px; }
+    .notif-title { font-size: 0.7rem; }
+    .notif-text { font-size: 0.65rem; }
+}
     </style>
 </head>
 <body>
@@ -1984,7 +3094,182 @@
 <!-- Live region for screen reader announcements -->
 <div aria-live="polite" class="sr-only" id="liveRegion"></div>
 
+<!-- ===== NEXUSBANK SECURE SECTION ===== -->
+<section class="secure-section">
+    <div class="secure-bg-gradient"></div>
+    <div class="secure-bg-grid"></div>
+    
+    <div class="secure-particles">
+        <div class="secure-particle particle-a"></div>
+        <div class="secure-particle particle-b"></div>
+        <div class="secure-particle particle-c"></div>
+        <div class="secure-particle particle-d"></div>
+        <div class="secure-particle particle-e"></div>
+        <div class="secure-particle particle-f"></div>
+    </div>
 
+    <div class="secure-container">
+        <div class="secure-content">
+            <div class="secure-badge">
+                <i class="fas fa-shield-halved"></i>
+                <span>NexusBank Secure</span>
+            </div>
+            
+            <h2 class="secure-headline">Security you can rely on</h2>
+            
+            <p class="secure-description">
+                Built to protect your money from day one. NexusBank uses smart, proactive 
+                safeguards to keep your account safe—while giving you full control to 
+                manage your security your way.
+            </p>
+            
+            <p class="secure-subtext">Stay protected. Stay in control.</p>
+            
+            <a href="../../../login.html?tab=register" class="secure-cta">
+                <span>Join NexusBank</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="secure-visual">
+            <div class="security-orb">
+                <div class="orb-glow-outer"></div>
+                <div class="orb-glow-inner"></div>
+                <div class="orb-ring ring-1"></div>
+                <div class="orb-ring ring-2"></div>
+                <div class="orb-ring ring-3"></div>
+                <div class="orb-core">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <div class="orb-dot dot-1"></div>
+                <div class="orb-dot dot-2"></div>
+                <div class="orb-dot dot-3"></div>
+            </div>
+            
+            <div class="secure-card card-lock">
+                <div class="card-icon"><i class="fas fa-lock"></i></div>
+                <div class="card-text">
+                    <span class="card-label">Encrypted</span>
+                    <span class="card-status">Active</span>
+                </div>
+                <div class="card-indicator green"></div>
+            </div>
+            
+            <div class="secure-card card-toggle">
+                <div class="card-icon"><i class="fas fa-toggle-on"></i></div>
+                <div class="card-text">
+                    <span class="card-label">2FA Auth</span>
+                    <span class="card-status">Enabled</span>
+                </div>
+                <div class="card-indicator green"></div>
+            </div>
+            
+            <div class="secure-card card-notify">
+                <div class="card-icon"><i class="fas fa-bell"></i></div>
+                <div class="card-text">
+                    <span class="card-label">Alerts</span>
+                    <span class="card-status">24/7 Monitor</span>
+                </div>
+                <div class="card-indicator pulse"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SECTION DIVIDER ===== -->
+<div class="section-divider">
+    <div class="divider-line"></div>
+    <div class="divider-dot"></div>
+    <div class="divider-line"></div>
+</div>
+
+<!-- ===== PEACE OF MIND SECTION ===== -->
+<section class="peace-section">
+    <!-- Background elements -->
+    <div class="peace-bg-dots"></div>
+    <div class="peace-bg-lines">
+        <div class="peace-line line-1"></div>
+        <div class="peace-line line-2"></div>
+        <div class="peace-line line-3"></div>
+    </div>
+
+    <div class="peace-container">
+        <!-- Left Visual -->
+        <div class="peace-visual">
+            <!-- Main shield card -->
+            <div class="peace-shield-card">
+                <div class="peace-shield-icon">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <div class="peace-shield-info">
+                    <span class="peace-shield-title">NexusBank Secure</span>
+                    <span class="peace-shield-status">Monitoring Active</span>
+                </div>
+                <div class="peace-shield-check">
+                    <i class="fas fa-circle-check"></i>
+                </div>
+            </div>
+
+            <!-- Transaction card 1 -->
+            <div class="peace-tx-card tx-card-1">
+                <div class="tx-icon">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="tx-info">
+                    <span class="tx-name">Transfer</span>
+                    <span class="tx-amount">$240.00</span>
+                </div>
+                <div class="tx-badge safe">Verified</div>
+            </div>
+
+            <!-- Transaction card 2 -->
+            <div class="peace-tx-card tx-card-2">
+                <div class="tx-icon received">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                <div class="tx-info">
+                    <span class="tx-name">Deposit</span>
+                    <span class="tx-amount">$1,850.00</span>
+                </div>
+                <div class="tx-badge safe">Safe</div>
+            </div>
+
+            <!-- Notification popup -->
+            <div class="peace-notification">
+                <div class="notif-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="notif-content">
+                    <span class="notif-title">Security Alert</span>
+                    <span class="notif-text">New login detected. Was this you?</span>
+                </div>
+                <div class="notif-time">Just now</div>
+            </div>
+
+            <!-- Activity dot -->
+            <div class="peace-activity-dot"></div>
+        </div>
+
+        <!-- Right Content -->
+        <div class="peace-content">
+            <h2 class="peace-headline">Looking for a sign? <span class="peace-highlight">This is it</span></h2>
+            
+            <p class="peace-description">
+                The NexusBank Secure shield is your reminder that your account is 
+                continuously monitored. Our systems are designed to spot unusual 
+                activity early and alert you instantly—so you can take action 
+                and stay protected.
+            </p>
+            
+            <p class="peace-subtext">Stay aware. Stay secure.</p>
+            
+            <a href="../../../login.html?tab=register" class="peace-cta">
+                <span>Bank with peace of mind</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
 
 
   <script>
