@@ -1643,6 +1643,1571 @@
         bottom: -36px;
     }
 }
+
+
+/* ===== BANK ACCOUNT PAGE STYLES ===== */
+
+.bank-hero {
+    padding: 4rem 0 3rem;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.bank-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+}
+
+.bank-hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.hero-cta {
+    margin-bottom: 3rem;
+}
+
+.btn-hero {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all var(--transition-bounce);
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+}
+
+.btn-hero:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 20px 30px -8px rgba(99, 102, 241, 0.5);
+}
+
+.btn-hero i {
+    transition: transform 0.2s ease;
+}
+
+.btn-hero:hover i {
+    transform: translateX(5px);
+}
+
+.trust-badges {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.trust-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(129, 140, 248, 0.1);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trust-icon i {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.trust-text {
+    text-align: left;
+}
+
+.trust-text .stars {
+    color: #fbbf24;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.trust-text p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.features-grid-section {
+    padding: 4rem 0;
+}
+
+.section-label {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-label h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.section-label p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.features-grid-2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.feature-card-bank {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: 2rem;
+    transition: all var(--transition-normal);
+}
+
+.feature-card-bank:hover {
+    transform: translateY(-5px);
+    border-color: rgba(129, 140, 248, 0.4);
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-icon-large {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, rgba(129, 140, 248, 0.15), rgba(167, 139, 250, 0.15));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.feature-icon-large i {
+    font-size: 1.75rem;
+    color: var(--primary);
+}
+
+.feature-card-bank h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.feature-card-bank p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.additional-info {
+    background: rgba(129, 140, 248, 0.05);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem 2rem;
+    margin: 3rem auto;
+    max-width: 1200px;
+}
+
+.additional-info p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.additional-info strong {
+    color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+    .bank-hero {
+        padding: 2rem 0;
+    }
+    
+    .trust-badges {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .features-grid-2col {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-label h2 {
+        font-size: 2rem;
+    }
+}
+
+
+/* ===== FEATURE SHOWCASE SECTIONS (Pockets, Alerts, Insights) ===== */
+
+.feature-showcase {
+    padding: 5rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-showcase-reverse {
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.showcase-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+
+.showcase-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.showcase-badge {
+    display: inline-block;
+    background: rgba(129, 140, 248, 0.15);
+    color: var(--primary);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+    width: fit-content;
+    letter-spacing: 0.3px;
+}
+
+.showcase-text h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text-primary), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.showcase-text p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.showcase-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.showcase-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.showcase-list li i {
+    color: var(--success);
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.showcase-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    transition: gap var(--transition-fast);
+}
+
+.showcase-link:hover {
+    gap: 0.75rem;
+}
+
+.showcase-link i {
+    font-size: 0.85rem;
+}
+
+.showcase-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== POCKETS VISUAL (REDESIGNED) ===== */
+
+.pockets-scene {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.main-balance-card {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem 2rem;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.35);
+    position: relative;
+    z-index: 2;
+}
+
+.balance-label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+
+.balance-amount {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.5px;
+}
+
+/* Flow indicator dots */
+.flow-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 1;
+}
+
+.flow-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: pulseDot 1.5s ease-in-out infinite;
+}
+
+.flow-dot:nth-child(1) { animation-delay: 0s; }
+.flow-dot:nth-child(2) { animation-delay: 0.4s; }
+.flow-dot:nth-child(3) { animation-delay: 0.8s; }
+
+@keyframes pulseDot {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Pockets Grid */
+.pockets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.pocket-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: all 0.25s ease;
+    cursor: default;
+}
+
+.pocket-card:hover {
+    border-color: rgba(129, 140, 248, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.pocket-icon-wrapper {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.pocket-bills .pocket-icon-wrapper {
+    background: rgba(129, 140, 248, 0.15);
+    color: var(--primary);
+}
+
+.pocket-travel .pocket-icon-wrapper {
+    background: rgba(34, 211, 238, 0.15);
+    color: var(--accent);
+}
+
+.pocket-gadgets .pocket-icon-wrapper {
+    background: rgba(167, 139, 250, 0.15);
+    color: var(--secondary);
+}
+
+.pocket-savings .pocket-icon-wrapper {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.pocket-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.pocket-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.pocket-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.pocket-progress {
+    height: 4px;
+    background: var(--surface-elevated);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.pocket-progress-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pocket-bills .pocket-progress-fill {
+    background: linear-gradient(90deg, var(--primary), #a5b4fc);
+}
+
+.pocket-travel .pocket-progress-fill {
+    background: linear-gradient(90deg, var(--accent), #67e8f9);
+}
+
+.pocket-gadgets .pocket-progress-fill {
+    background: linear-gradient(90deg, var(--secondary), #c4b5fd);
+}
+
+.pocket-savings .pocket-progress-fill {
+    background: linear-gradient(90deg, var(--success), #6ee7b7);
+}
+
+/* ===== PHONE MOCKUP (Instant Alerts) ===== */
+.phone-mockup {
+    width: 280px;
+    background: #111827;
+    border: 3px solid var(--border-medium);
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: var(--shadow-2xl);
+}
+
+.phone-screen {
+    padding: 1rem 1.25rem;
+}
+
+.phone-status-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    padding-bottom: 1rem;
+}
+
+.phone-app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text-primary);
+    padding-bottom: 1.25rem;
+}
+
+.phone-app-header i {
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+}
+
+.phone-balance-display {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+    border-radius: var(--radius-xl);
+    padding: 1.25rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.phone-balance-label {
+    display: block;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.phone-balance-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.phone-notifications {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.phone-notif {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    border: 1px solid transparent;
+    animation: slideInNotif 0.5s ease forwards;
+}
+
+.phone-notif:nth-child(1) { animation-delay: 0.1s; }
+.phone-notif:nth-child(2) { animation-delay: 0.3s; }
+.phone-notif:nth-child(3) { animation-delay: 0.5s; }
+.phone-notif:nth-child(4) { animation-delay: 0.7s; }
+
+@keyframes slideInNotif {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.phone-notif:hover {
+    border-color: var(--border-medium);
+}
+
+.notif-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.notif-incoming .notif-icon {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.notif-outgoing .notif-icon {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--error);
+}
+
+.notif-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.notif-title {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.notif-subtitle {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.notif-time {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+}
+
+/* ===== INSIGHTS DASHBOARD ===== */
+.insights-dashboard {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 460px;
+}
+
+.insights-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.insights-month {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    background: var(--surface-elevated);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-full);
+}
+
+.insights-charts {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.pie-chart-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+}
+
+.pie-chart-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.pie-segment {
+    transition: stroke-dasharray 1s ease;
+}
+
+.pie-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.pie-total {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.pie-label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+}
+
+.bar-chart-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-width: 0;
+}
+
+.bar-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.bar-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    width: 55px;
+    flex-shrink: 0;
+}
+
+.bar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--surface-elevated);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bar-value {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    width: 50px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+
+/* ===== ACCOUNT SWITCHING VISUAL ===== */
+
+.switching-scene {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bank-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.nexusbank-card {
+    background: linear-gradient(145deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.08));
+    border-color: rgba(129, 140, 248, 0.3);
+    position: relative;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.15), 0 0 60px rgba(139, 92, 246, 0.08);
+}
+
+.nexusbank-glow {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: var(--radius-xl);
+    background: transparent;
+    pointer-events: none;
+    box-shadow: 0 0 25px rgba(129, 140, 248, 0.2);
+    animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 25px rgba(129, 140, 248, 0.15); }
+    50% { box-shadow: 0 0 40px rgba(129, 140, 248, 0.3), 0 0 60px rgba(139, 92, 246, 0.15); }
+}
+
+.bank-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bank-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.old-bank-card .bank-card-header i {
+    color: var(--text-tertiary);
+    font-size: 1rem;
+}
+
+.accent-text {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.checkmark-badge {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    animation: checkPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards;
+    opacity: 0;
+    transform: scale(0);
+}
+
+@keyframes checkPop {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.checkmark-badge i {
+    color: white;
+    font-size: 0.75rem;
+}
+
+.bank-card-balance {
+    text-align: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.bank-balance-label {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 0.2rem;
+}
+
+.bank-balance-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.bank-card-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.transfer-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-elevated);
+    font-size: 0.78rem;
+}
+
+.transfer-item i {
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.transfer-item span:nth-child(2) {
+    flex: 1;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.item-amount {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.item-salary i { color: var(--primary); }
+.item-bills i { color: var(--accent); }
+.item-balance i { color: var(--secondary); }
+
+.transfer-item.done {
+    background: rgba(16, 185, 129, 0.08);
+}
+
+.transfer-item.done i {
+    color: var(--success);
+}
+
+.transfer-item.done .item-amount {
+    color: var(--success);
+}
+
+/* Switching Flow Arrows */
+.switching-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    flex-shrink: 0;
+    padding: 0 0.25rem;
+}
+
+.flow-arrow {
+    height: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.arrow-svg {
+    width: 52px;
+    height: 24px;
+}
+
+.arrow-svg line,
+.arrow-svg polyline {
+    animation: arrowFlow 1.8s ease-in-out infinite;
+}
+
+.arrow-1 .arrow-svg line,
+.arrow-1 .arrow-svg polyline {
+    animation-delay: 0s;
+}
+
+.arrow-2 .arrow-svg line,
+.arrow-2 .arrow-svg polyline {
+    animation-delay: 0.5s;
+}
+
+.arrow-3 .arrow-svg line,
+.arrow-3 .arrow-svg polyline {
+    animation-delay: 1s;
+}
+
+@keyframes arrowFlow {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+
+/* ===== HOW TO SWITCH SECTION ===== */
+
+.how-to-switch {
+    padding: 5rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.how-to-container {
+    padding: 0 1.5rem;
+}
+
+.how-to-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.how-to-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.step-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: 2rem;
+    transition: all var(--transition-normal);
+    position: relative;
+}
+
+.step-card:hover {
+    border-color: rgba(129, 140, 248, 0.4);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.step-number {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1.25rem;
+}
+
+.step-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.step-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+/* ===== SECURITY SECTION ===== */
+
+.security-section {
+    padding: 5rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid var(--border-light);
+}
+
+.security-container {
+    padding: 0 1.5rem;
+}
+
+.security-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.security-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.security-header p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.security-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.security-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: 2rem;
+    text-align: center;
+    transition: all var(--transition-normal);
+}
+
+.security-card:hover {
+    border-color: rgba(129, 140, 248, 0.4);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.security-visual {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.security-card h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.security-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+/* ===== BIOMETRIC / FINGERPRINT VISUAL ===== */
+
+.fingerprint-scene {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fingerprint-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(129, 140, 248, 0.08);
+    border: 2px solid rgba(129, 140, 248, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.fingerprint-circle i {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.scan-line {
+    position: absolute;
+    width: 70px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    border-radius: 50%;
+    z-index: 3;
+    animation: scanMove 2s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+@keyframes scanMove {
+    0% { top: 15px; opacity: 0.2; }
+    25% { top: 40px; opacity: 1; }
+    50% { top: 60px; opacity: 1; }
+    75% { top: 75px; opacity: 0.5; }
+    100% { top: 85px; opacity: 0; }
+}
+
+.scan-glow {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: transparent;
+    z-index: 1;
+    box-shadow: 0 0 25px rgba(129, 140, 248, 0.2);
+    animation: glowPulseSecurity 2s ease-in-out infinite;
+}
+
+@keyframes glowPulseSecurity {
+    0%, 100% { box-shadow: 0 0 20px rgba(129, 140, 248, 0.15); }
+    50% { box-shadow: 0 0 40px rgba(129, 140, 248, 0.35); }
+}
+
+/* ===== SHIELD / PROTECTED DEPOSITS VISUAL ===== */
+
+.shield-scene {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shield-icon-wrapper {
+    width: 70px;
+    height: 80px;
+    background: rgba(16, 185, 129, 0.08);
+    border: 2px solid rgba(16, 185, 129, 0.25);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 3;
+}
+
+.shield-icon-wrapper i {
+    font-size: 2rem;
+    color: var(--success);
+}
+
+.shield-money-icon {
+    position: absolute;
+    bottom: 5px;
+    z-index: 4;
+    background: var(--surface);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.shield-money-icon i {
+    font-size: 0.9rem;
+    color: #fbbf24;
+}
+
+.shield-pulse {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: transparent;
+    z-index: 1;
+    border: 2px solid rgba(16, 185, 129, 0.2);
+    animation: shieldPulse 2.5s ease-out infinite;
+}
+
+@keyframes shieldPulse {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* ===== FRAUD DETECTION VISUAL (REDESIGNED) ===== */
+
+.fraud-scene {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main scanning ring */
+.fraud-main-ring {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    z-index: 5;
+}
+
+.fraud-ring-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(129, 140, 248, 0.15);
+}
+
+.fraud-ring-scan {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    border-radius: 50%;
+    border: 2.5px solid transparent;
+    border-top-color: var(--primary);
+    border-right-color: var(--accent);
+    animation: ringScan 2s linear infinite;
+    box-shadow: 0 0 8px rgba(129, 140, 248, 0.3);
+}
+
+@keyframes ringScan {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fraud-shield-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(129, 140, 248, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fraud-shield-center i {
+    font-size: 1rem;
+    color: var(--primary);
+}
+
+/* Barrier ring that blocks threats */
+.fraud-barrier {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px dashed rgba(129, 140, 248, 0.2);
+    z-index: 4;
+    animation: barrierPulse 3s ease-in-out infinite;
+}
+
+@keyframes barrierPulse {
+    0%, 100% { border-color: rgba(129, 140, 248, 0.12); }
+    50% { border-color: rgba(129, 140, 248, 0.35); }
+}
+
+/* Floating threats — all kept completely outside the barrier */
+.fraud-threat {
+    position: absolute;
+    z-index: 3;
+}
+
+.threat-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--error);
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+/* Threat 1 — orbits around the outside of the barrier in a circle */
+.threat-1 {
+    top: 50%;
+    left: 50%;
+    animation: orbitOutside 4s linear infinite;
+}
+
+@keyframes orbitOutside {
+    0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(52px) rotate(0deg); opacity: 1; }
+    25%  { opacity: 0.6; }
+    50%  { opacity: 1; }
+    75%  { opacity: 0.6; }
+    100% { transform: translate(-50%, -50%) rotate(360deg) translateX(52px) rotate(-360deg); opacity: 1; }
+}
+
+/* Threat 2 — approaches from the right, stops at the barrier */
+.threat-2 {
+    top: 50%;
+    right: -4px;
+    animation: approachBarrier 3.2s ease-in-out infinite;
+}
+
+@keyframes approachBarrier {
+    0%   { top: 50%; right: -4px; opacity: 0.2; }
+    25%  { top: 48%; right: 10px; opacity: 1; }
+    50%  { top: 48%; right: 10px; opacity: 1; }
+    70%  { top: 48%; right: 10px; opacity: 0.6; }
+    100% { top: 50%; right: -4px; opacity: 0.2; }
+}
+
+/* Threat 3 — approaches from bottom-right, gets blocked and neutralized */
+.threat-3 {
+    bottom: 8px;
+    right: 8px;
+    animation: threatBlocked 2.8s ease-in-out infinite;
+}
+
+.threat-3 .threat-dot {
+    background: var(--error);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+.block-cross {
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    width: 23px;
+    height: 23px;
+    opacity: 0;
+    animation: crossAppear 2.8s ease-in-out infinite;
+}
+
+.block-cross::before,
+.block-cross::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2.5px;
+    background: var(--success);
+    border-radius: 3px;
+}
+
+.block-cross::before {
+    transform: rotate(45deg);
+}
+
+.block-cross::after {
+    transform: rotate(-45deg);
+}
+
+@keyframes threatBlocked {
+    0%   { bottom: 8px; right: 8px; opacity: 0.3; }
+    30%  { bottom: 22px; right: 18px; opacity: 1; }
+    50%  { bottom: 24px; right: 18px; opacity: 1; }
+    60%  { bottom: 24px; right: 18px; opacity: 0.3; }
+    80%  { bottom: 24px; right: 18px; opacity: 0.2; }
+    100% { bottom: 8px; right: 8px; opacity: 0.3; }
+}
+
+@keyframes crossAppear {
+    0%   { opacity: 0; transform: scale(0); }
+    40%  { opacity: 0; transform: scale(0); }
+    52%  { opacity: 1; transform: scale(1.4); }
+    62%  { opacity: 1; transform: scale(1); }
+    80%  { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.7); }
+}
+
+.blocked .threat-dot {
+    animation: dotBlocked 2.8s ease-in-out infinite;
+}
+
+@keyframes dotBlocked {
+    0%   { background: var(--error); box-shadow: 0 0 10px rgba(239, 68, 68, 0.8); }
+    42%  { background: var(--error); box-shadow: 0 0 10px rgba(239, 68, 68, 0.8); }
+    55%  { background: var(--success); box-shadow: 0 0 12px rgba(16, 185, 129, 0.7); }
+    80%  { background: var(--success); box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+    100% { background: var(--success); box-shadow: 0 0 4px rgba(16, 185, 129, 0.2); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .showcase-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    
+    .feature-showcase-reverse .showcase-container {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    
+    .showcase-text h2 {
+        font-size: 2rem;
+    }
+    
+
+        .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .security-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .how-to-header h2,
+    .security-header h2 {
+        font-size: 2rem;
+    }
+    .showcase-visual {
+        order: -1;
+    }
+    
+    .feature-showcase-reverse .showcase-visual {
+        order: -1;
+    }
+    
+    .pockets-scene {
+        max-width: 100%;
+    }
+    
+    .phone-mockup {
+        width: 240px;
+    }
+    
+        .insights-charts {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .switching-scene {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    
+    .switching-flow {
+        flex-direction: row;
+        padding: 0.5rem 0;
+        gap: 0.5rem;
+    }
+    
+    .arrow-svg {
+        transform: rotate(90deg);
+        width: 24px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .feature-showcase {
+        padding: 3rem 0;
+    }
+    
+    .showcase-container {
+        padding: 0 1rem;
+    }
+    
+    .showcase-text h2 {
+        font-size: 1.75rem;
+    }
+    
+    .pockets-grid {
+        grid-template-columns: 1fr;
+    }
+    
+       .phone-mockup {
+        width: 220px;
+        border-radius: 28px;
+    }
+    
+    .how-to-header h2,
+    .security-header h2 {
+        font-size: 1.75rem;
+    }
+    
+    .step-card,
+    .security-card {
+        padding: 1.5rem;
+    }
+
+    .switching-scene {
+        gap: 0.25rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -1983,11 +3548,599 @@
 <!-- Live region for screen reader announcements -->
 <div aria-live="polite" class="sr-only" id="liveRegion"></div>
 
-<!-- Page Content -->
-<div class="page-content">
-    <h1>Personal Accounts</h1>
-    <p>Discover the perfect account for your needs. From everyday banking to specialized solutions.</p>
-</div>
+<!-- Bank Account Hero Section -->
+<section class="bank-hero">
+    <h1>Current Account</h1>
+    <p class="bank-hero-subtitle">Banking that moves with you</p>
+    
+    <p class="bank-hero-subtitle" style="font-size: 1.1rem; margin-top: -0.5rem;">
+        Send, spend, save, and manage your money easily with NexusBank. Enjoy a seamless 
+        digital banking experience with 24/7 in-app support whenever you need it.
+    </p>
+    
+    <div class="hero-cta">
+        <a href="../../../login.html?tab=register" class="btn-hero">
+            <span>Open a bank account</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    
+    <div class="trust-badges">
+        <div class="trust-item">
+            <div class="trust-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="trust-text">
+                <div class="stars">★★★★★</div>
+                <p>Trusted by customers worldwide</p>
+            </div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="trust-text">
+                <div class="stars">★★★★★</div>
+                <p>Rated highly by our users for reliability and ease of use</p>
+            </div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="trust-text">
+                <div class="stars">★★★★★</div>
+                <p>Recognised for innovation in modern personal finance</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-grid-section">
+    <div class="section-label">
+        <h2>Everything you need, <span class="gradient-text">in one place</span></h2>
+    </div>
+    
+    <div class="features-grid-2col">
+        <!-- Row 1 -->
+        <div class="feature-card-bank">
+            <div class="feature-icon-large">
+                <i class="fas fa-percent"></i>
+            </div>
+            <h3>Earn competitive interest, paid daily</h3>
+            <p>Grow your savings with a variable interest rate designed to help your money work harder. Interest is paid daily and may change over time.</p>
+        </div>
+        
+        <div class="feature-card-bank">
+            <div class="feature-icon-large">
+                <i class="fas fa-globe"></i>
+            </div>
+            <h3>Send money abroad with ease</h3>
+            <p>Transfer money internationally anytime with fast processing and competitive exchange rates.</p>
+        </div>
+        
+        <!-- Row 2 -->
+        <div class="feature-card-bank">
+            <div class="feature-icon-large">
+                <i class="fas fa-arrow-right-arrow-left"></i>
+            </div>
+            <h3>Make NexusBank your main account</h3>
+            <p>Move your salary, payments, and balance from another bank with a simple and secure switching process.</p>
+        </div>
+        
+        <div class="feature-card-bank">
+            <div class="feature-icon-large">
+                <i class="fas fa-user-group"></i>
+            </div>
+            <h3>Manage money together</h3>
+            <p>Open shared accounts for households or explore options tailored for younger users.</p>
+        </div>
+        
+        <!-- Row 3 -->
+        <div class="feature-card-bank">
+            <div class="feature-icon-large">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <h3>Tools for freelancers and independent work</h3>
+            <p>Track income, manage expenses, and simplify your finances in one place.</p>
+        </div>
+        
+        <div class="feature-card-bank">
+            <div class="feature-icon-large">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3>Instant payments between users</h3>
+            <p>Send and receive money instantly with other NexusBank customers.</p>
+        </div>
+        
+        <!-- Row 4 -->
+        <div class="feature-card-bank">
+            <div class="feature-icon-large">
+                <i class="fas fa-chart-pie"></i>
+            </div>
+            <h3>Smart budgeting</h3>
+            <p>Organise your money by setting aside funds for bills, subscriptions, and everyday expenses.</p>
+        </div>
+        
+        <div class="feature-card-bank">
+            <div class="feature-icon-large">
+                <i class="fas fa-coins"></i>
+            </div>
+            <h3>Multi-currency accounts</h3>
+            <p>Hold and exchange multiple currencies with transparent rates and no hidden fees.</p>
+        </div>
+        
+        <!-- Row 5 - Full width -->
+        <div class="feature-card-bank" style="grid-column: 1 / -1;">
+            <div class="feature-icon-large">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Start investing</h3>
+            <p>Access a range of global investment opportunities. Capital is at risk and investments may go up or down.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Additional Information -->
+<section class="additional-info">
+    <p><strong>Additional information</strong></p>
+    <p>The Annual Equivalent Rate (AER) represents the interest you can earn over one year, including compound interest. Interest rates are variable and may change over time. Terms and conditions apply, and any interest earned may be subject to applicable taxes.</p>
+</section>
+
+<!-- ===== POCKETS FEATURE SECTION ===== -->
+<section class="feature-showcase" id="pockets">
+    <div class="showcase-container">
+        <div class="showcase-text">
+            <span class="showcase-badge">Smart Saving</span>
+            <h2>Pockets</h2>
+            <p>Organise your money your way. Create multiple sub-accounts for bills, travel, gadgets, and more. Watch your funds flow seamlessly between your main balance and each pocket with smooth, real-time updates.</p>
+            <ul class="showcase-list">
+                <li><i class="fas fa-check-circle"></i> Create unlimited custom pockets</li>
+                <li><i class="fas fa-check-circle"></i> Set savings goals with target amounts</li>
+                <li><i class="fas fa-check-circle"></i> Automatic round-ups into any pocket</li>
+                <li><i class="fas fa-check-circle"></i> Real-time balance tracking per pocket</li>
+            </ul>
+            <a href="../../../login.html?tab=register" class="showcase-link">Start saving with Pockets <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="showcase-visual pockets-visual">
+            <div class="pockets-scene">
+                <!-- Main Balance Card -->
+                <div class="main-balance-card">
+                    <span class="balance-label">Main Balance</span>
+                    <span class="balance-amount">€4,250.00</span>
+                </div>
+                
+                <!-- Flow Indicator -->
+                <div class="flow-indicator">
+                    <div class="flow-dot"></div>
+                    <div class="flow-dot"></div>
+                    <div class="flow-dot"></div>
+                </div>
+                
+                <!-- Pockets Grid -->
+                <div class="pockets-grid">
+                    <div class="pocket-card pocket-bills">
+                        <div class="pocket-icon-wrapper">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="pocket-info">
+                            <span class="pocket-label">Bills</span>
+                            <span class="pocket-value">€1,200.00</span>
+                        </div>
+                        <div class="pocket-progress">
+                            <div class="pocket-progress-fill" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="pocket-card pocket-travel">
+                        <div class="pocket-icon-wrapper">
+                            <i class="fas fa-plane-departure"></i>
+                        </div>
+                        <div class="pocket-info">
+                            <span class="pocket-label">Travel</span>
+                            <span class="pocket-value">€850.00</span>
+                        </div>
+                        <div class="pocket-progress">
+                            <div class="pocket-progress-fill" style="width: 43%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="pocket-card pocket-gadgets">
+                        <div class="pocket-icon-wrapper">
+                            <i class="fas fa-mobile-screen-button"></i>
+                        </div>
+                        <div class="pocket-info">
+                            <span class="pocket-label">Gadgets</span>
+                            <span class="pocket-value">€420.00</span>
+                        </div>
+                        <div class="pocket-progress">
+                            <div class="pocket-progress-fill" style="width: 28%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="pocket-card pocket-savings">
+                        <div class="pocket-icon-wrapper">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="pocket-info">
+                            <span class="pocket-label">Savings</span>
+                            <span class="pocket-value">€1,780.00</span>
+                        </div>
+                        <div class="pocket-progress">
+                            <div class="pocket-progress-fill" style="width: 89%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== INSTANT ALERTS FEATURE SECTION ===== -->
+<section class="feature-showcase feature-showcase-reverse" id="alerts">
+    <div class="showcase-container">
+        <div class="showcase-visual alerts-visual">
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <div class="phone-status-bar">
+                        <span>9:41</span>
+                        <span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span>
+                    </div>
+                    <div class="phone-app-header">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>NexusBank</span>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="phone-balance-display">
+                        <span class="phone-balance-label">Current Balance</span>
+                        <span class="phone-balance-value">€4,250.00</span>
+                    </div>
+                    <div class="phone-notifications">
+                        <div class="phone-notif notif-incoming">
+                            <div class="notif-icon"><i class="fas fa-arrow-down"></i></div>
+                            <div class="notif-details">
+                                <span class="notif-title">+ €500.00</span>
+                                <span class="notif-subtitle">Salary · Nexus Corp</span>
+                            </div>
+                            <span class="notif-time">10:23</span>
+                        </div>
+                        <div class="phone-notif notif-outgoing">
+                            <div class="notif-icon"><i class="fas fa-arrow-up"></i></div>
+                            <div class="notif-details">
+                                <span class="notif-title">– €12.00</span>
+                                <span class="notif-subtitle">Coffee Shop · Central</span>
+                            </div>
+                            <span class="notif-time">09:15</span>
+                        </div>
+                        <div class="phone-notif notif-outgoing">
+                            <div class="notif-icon"><i class="fas fa-arrow-up"></i></div>
+                            <div class="notif-details">
+                                <span class="notif-title">– €34.50</span>
+                                <span class="notif-subtitle">Supermarket · FreshCo</span>
+                            </div>
+                            <span class="notif-time">Yesterday</span>
+                        </div>
+                        <div class="phone-notif notif-incoming">
+                            <div class="notif-icon"><i class="fas fa-arrow-down"></i></div>
+                            <div class="notif-details">
+                                <span class="notif-title">+ €78.25</span>
+                                <span class="notif-subtitle">Refund · Online Store</span>
+                            </div>
+                            <span class="notif-time">Yesterday</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="showcase-text">
+            <span class="showcase-badge">Stay Informed</span>
+            <h2>Instant Alerts</h2>
+            <p>Never miss a transaction. Get real-time push notifications the moment money moves in or out of your account. From your morning coffee to your monthly salary — stay on top of every euro.</p>
+            <ul class="showcase-list">
+                <li><i class="fas fa-check-circle"></i> Real-time push notifications for every transaction</li>
+                <li><i class="fas fa-check-circle"></i> Customisable alert preferences</li>
+                <li><i class="fas fa-check-circle"></i> Balance updates after each transaction</li>
+                <li><i class="fas fa-check-circle"></i> Instant fraud detection alerts</li>
+            </ul>
+            <a href="../../../login.html?tab=register" class="showcase-link">Get instant alerts <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SPENDING INSIGHTS FEATURE SECTION ===== -->
+<section class="feature-showcase" id="insights">
+    <div class="showcase-container">
+        <div class="showcase-text">
+            <span class="showcase-badge">Smart Analytics</span>
+            <h2>Spending Insights</h2>
+            <p>Understand where your money goes. Our intelligent dashboard breaks down your spending into clear categories with beautiful, easy-to-read charts. Make smarter financial decisions with data at your fingertips.</p>
+            <ul class="showcase-list">
+                <li><i class="fas fa-check-circle"></i> Automatic expense categorisation</li>
+                <li><i class="fas fa-check-circle"></i> Monthly and weekly breakdowns</li>
+                <li><i class="fas fa-check-circle"></i> Personalised spending tips</li>
+                <li><i class="fas fa-check-circle"></i> Export reports for tax and budgeting</li>
+            </ul>
+            <a href="../../../login.html?tab=register" class="showcase-link">Explore your insights <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="showcase-visual insights-visual">
+            <div class="insights-dashboard">
+                <div class="insights-header">
+                    <span>Spending Breakdown</span>
+                    <span class="insights-month">This Month</span>
+                </div>
+                <div class="insights-charts">
+                    <div class="pie-chart-container">
+                        <svg viewBox="0 0 200 200" class="pie-chart-svg">
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="#1e293b" stroke-width="30"/>
+                            <circle class="pie-segment seg-food" cx="100" cy="100" r="80" fill="none" stroke="#818cf8" stroke-width="30" stroke-dasharray="150 502" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+                            <circle class="pie-segment seg-travel" cx="100" cy="100" r="80" fill="none" stroke="#a78bfa" stroke-width="30" stroke-dasharray="100 502" stroke-dashoffset="-150" transform="rotate(-90 100 100)"/>
+                            <circle class="pie-segment seg-bills" cx="100" cy="100" r="80" fill="none" stroke="#22d3ee" stroke-width="30" stroke-dasharray="125 502" stroke-dashoffset="-250" transform="rotate(-90 100 100)"/>
+                            <circle class="pie-segment seg-other" cx="100" cy="100" r="80" fill="none" stroke="#6366f1" stroke-width="30" stroke-dasharray="127 502" stroke-dashoffset="-375" transform="rotate(-90 100 100)"/>
+                        </svg>
+                        <div class="pie-center">
+                            <span class="pie-total">€3,850</span>
+                            <span class="pie-label">Total Spent</span>
+                        </div>
+                    </div>
+                    <div class="bar-chart-container">
+                        <div class="bar-item">
+                            <div class="bar-label"><span class="bar-dot" style="background:#818cf8;"></span> Food</div>
+                            <div class="bar-track"><div class="bar-fill" style="width:38%; background:#818cf8;"></div></div>
+                            <span class="bar-value">€1,463</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label"><span class="bar-dot" style="background:#a78bfa;"></span> Travel</div>
+                            <div class="bar-track"><div class="bar-fill" style="width:25%; background:#a78bfa;"></div></div>
+                            <span class="bar-value">€962</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label"><span class="bar-dot" style="background:#22d3ee;"></span> Bills</div>
+                            <div class="bar-track"><div class="bar-fill" style="width:22%; background:#22d3ee;"></div></div>
+                            <span class="bar-value">€847</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label"><span class="bar-dot" style="background:#6366f1;"></span> Other</div>
+                            <div class="bar-track"><div class="bar-fill" style="width:15%; background:#6366f1;"></div></div>
+                            <span class="bar-value">€578</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ACCOUNT SWITCHING FEATURE SECTION ===== -->
+<section class="feature-showcase feature-showcase-reverse" id="switching">
+    <div class="showcase-container">
+        <div class="showcase-visual switching-visual">
+            <div class="switching-scene">
+                <!-- Old Bank Card -->
+                <div class="bank-card old-bank-card">
+                    <div class="bank-card-header">
+                        <span class="bank-name">Old Bank</span>
+                        <i class="fas fa-building-columns"></i>
+                    </div>
+                    <div class="bank-card-balance">
+                        <span class="bank-balance-label">Current Balance</span>
+                        <span class="bank-balance-value">€3,800.00</span>
+                    </div>
+                    <div class="bank-card-items">
+                        <div class="transfer-item item-salary">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Salary</span>
+                            <span class="item-amount">€2,500</span>
+                        </div>
+                        <div class="transfer-item item-bills">
+                            <i class="fas fa-file-invoice"></i>
+                            <span>Bills</span>
+                            <span class="item-amount">€950</span>
+                        </div>
+                        <div class="transfer-item item-balance">
+                            <i class="fas fa-coins"></i>
+                            <span>Balance</span>
+                            <span class="item-amount">€350</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flow Arrows -->
+                <div class="switching-flow">
+                    <div class="flow-arrow arrow-1">
+                        <svg viewBox="0 0 60 24" class="arrow-svg">
+                            <line x1="0" y1="12" x2="50" y2="12" stroke="url(#arrowGrad1)" stroke-width="2.5" stroke-linecap="round"/>
+                            <polyline points="42,6 52,12 42,18" fill="none" stroke="url(#arrowGrad1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="arrowGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#475569"/>
+                                    <stop offset="100%" stop-color="#818cf8"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="flow-arrow arrow-2">
+                        <svg viewBox="0 0 60 24" class="arrow-svg">
+                            <line x1="0" y1="12" x2="50" y2="12" stroke="url(#arrowGrad2)" stroke-width="2.5" stroke-linecap="round"/>
+                            <polyline points="42,6 52,12 42,18" fill="none" stroke="url(#arrowGrad2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="arrowGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#475569"/>
+                                    <stop offset="100%" stop-color="#a78bfa"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="flow-arrow arrow-3">
+                        <svg viewBox="0 0 60 24" class="arrow-svg">
+                            <line x1="0" y1="12" x2="50" y2="12" stroke="url(#arrowGrad3)" stroke-width="2.5" stroke-linecap="round"/>
+                            <polyline points="42,6 52,12 42,18" fill="none" stroke="url(#arrowGrad3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="arrowGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#475569"/>
+                                    <stop offset="100%" stop-color="#22d3ee"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- NexusBank Card -->
+                <div class="bank-card nexusbank-card">
+                    <div class="bank-card-header">
+                        <span class="bank-name">Nexus<span class="accent-text">Bank</span></span>
+                        <div class="checkmark-badge">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                    <div class="bank-card-balance">
+                        <span class="bank-balance-label">New Balance</span>
+                        <span class="bank-balance-value">€3,800.00</span>
+                    </div>
+                    <div class="bank-card-items">
+                        <div class="transfer-item done">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Salary</span>
+                            <span class="item-amount">€2,500</span>
+                        </div>
+                        <div class="transfer-item done">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Bills</span>
+                            <span class="item-amount">€950</span>
+                        </div>
+                        <div class="transfer-item done">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Balance</span>
+                            <span class="item-amount">€350</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Glow overlay on NexusBank card -->
+                <div class="nexusbank-glow"></div>
+            </div>
+        </div>
+        <div class="showcase-text">
+            <span class="showcase-badge">Account Switching</span>
+            <h2>Make NexusBank your main account</h2>
+            <p>Switch to NexusBank effortlessly and bring everything with you. Move your salary, payments, and existing balance in just a few simple steps — completely free. The process is secure, reliable, and designed to be smooth from start to finish, so you can start banking smarter without any stress.</p>
+            <ul class="showcase-list">
+                <li><i class="fas fa-check-circle"></i> Move your salary, bills, and balance automatically</li>
+                <li><i class="fas fa-check-circle"></i> Completely free switching service</li>
+                <li><i class="fas fa-check-circle"></i> Secure and reliable transfer process</li>
+                <li><i class="fas fa-check-circle"></i> Start banking smarter in just a few steps</li>
+            </ul>
+            <a href="../../../login.html?tab=register" class="showcase-link">Switch to NexusBank <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== HOW TO SWITCH SECTION ===== -->
+<section class="how-to-switch">
+    <div class="how-to-container">
+        <div class="how-to-header">
+            <h2>Switch to NexusBank in <span class="gradient-text">3 simple steps</span></h2>
+            <a href="../../../login.html?tab=register" class="btn-hero">
+                <span>Join NexusBank</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Open your account</h3>
+                <p>Create your NexusBank account in minutes and start using it right away. Share your IBAN with your employer to receive your salary directly.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Switch your payments</h3>
+                <p>Easily move your recurring payments like subscriptions, bills, and utilities to NexusBank without interruptions.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Automate your payday</h3>
+                <p>Automatically split your income into categories like bills, savings, and spending the moment it arrives.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SECURITY SECTION ===== -->
+<section class="security-section">
+    <div class="security-container">
+        <div class="security-header">
+            <h2>Your money, <span class="gradient-text">protected</span></h2>
+            <p>At NexusBank, your security comes first. With advanced technology and built-in safeguards, your money is protected at every step — so you can bank with confidence.</p>
+        </div>
+        
+        <div class="security-grid">
+            <!-- Biometric Security -->
+            <div class="security-card">
+                <div class="security-visual">
+                    <div class="fingerprint-scene">
+                        <div class="fingerprint-circle">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <div class="scan-line"></div>
+                        <div class="scan-glow"></div>
+                    </div>
+                </div>
+                <h3>Biometric security</h3>
+                <p>Secure your account with fingerprint or facial recognition, ensuring only you can access your funds.</p>
+            </div>
+            
+            <!-- Protected Deposits -->
+            <div class="security-card">
+                <div class="security-visual">
+                    <div class="shield-scene">
+                        <div class="shield-icon-wrapper">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <div class="shield-money-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="shield-pulse"></div>
+                    </div>
+                </div>
+                <h3>Protected deposits</h3>
+                <p>Your funds are safeguarded with reliable protection systems for both personal and shared accounts.</p>
+            </div>
+            
+                        <!-- Smart Fraud Detection -->
+            <div class="security-card">
+                <div class="security-visual">
+                                        <div class="fraud-scene">
+                        <!-- Scanning Ring -->
+                        <div class="fraud-main-ring">
+                            <div class="fraud-ring-track"></div>
+                            <div class="fraud-ring-scan"></div>
+                            <div class="fraud-shield-center">
+                                <i class="fas fa-shield-halved"></i>
+                            </div>
+                        </div>
+                        <div class="fraud-barrier"></div>
+                        <!-- Floating threat dots -->
+                        <div class="fraud-threat threat-1">
+                            <div class="threat-dot"></div>
+                        </div>
+                        <div class="fraud-threat threat-2">
+                            <div class="threat-dot"></div>
+                        </div>
+                        <div class="fraud-threat threat-3 blocked">
+                            <div class="threat-dot"></div>
+                            <div class="block-cross"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Smart fraud detection</h3>
+                <p>Advanced algorithms monitor activity in real time to detect and prevent suspicious behavior before it becomes a problem.</p>
+            </div>
+        </div>
+    </div>
+</section>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
         

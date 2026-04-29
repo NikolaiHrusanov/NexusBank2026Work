@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusBank | Joint Accounts</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #818cf8;
+            --primary-dark: #6366f1;
+            --secondary: #a78bfa;
+            --accent: #22d3ee;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --surface: #1e293b;
+            --surface-elevated: #334155;
+            --surface-hover: #475569;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --border-light: #334155;
+            --border-medium: #475569;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-2xl: 24px;
+            --radius-3xl: 32px;
+            --radius-full: 9999px;
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 94px;
+            overflow-x: hidden;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Navigation styles kept identical to your original */
+        .floating-nav {
+            position: fixed;
+            top: var(--space-lg);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 2rem);
+            max-width: 1200px;
+            background: var(--surface);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: 0 var(--space-lg);
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 84px;
+        }
+
+        .floating-nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .nav-brand .accent {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            margin-left: auto;
+            flex-wrap: nowrap;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            border-radius: 40px;
+            transition: var(--transition-bounce);
+            position: relative;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            border: none;
+            background: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        button.nav-item {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.6;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        button.nav-item:focus { outline: none; }
+        button.nav-item:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: var(--radius-full);
+        }
+
+        .nav-item i { font-size: 1rem; transition: transform 0.2s ease; color: var(--text-tertiary); }
+        .nav-item:hover { background: var(--surface-hover); transform: scale(1.05); color: var(--primary); }
+        .nav-item:active { transform: scale(0.97); transition: transform 0.05s ease; }
+        .nav-item:hover i { transform: translateY(-1px); }
+
+        .nav-item.btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: var(--shadow-md);
+            padding: 0.5rem 1.25rem;
+        }
+        .nav-item.btn-primary i { color: white; }
+        .nav-item.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+        .nav-item.btn-primary:active { transform: translateY(0); box-shadow: var(--shadow-sm); }
+
+        .nav-item.btn-ghost { background: transparent; padding: 0.5rem 1.25rem; }
+        .nav-item.btn-ghost:hover { background: var(--surface-hover); color: var(--primary); }
+        .nav-item.btn-ghost:active { transform: scale(0.97); }
+
+        .nav-spacer {
+            width: 3px;
+            height: 33px;
+            background: var(--border-medium);
+            margin: 0 var(--space-md);
+            flex-shrink: 0;
+        }
+
+        .mobile-menu-btn { display: none; }
+
+        /* Dropdown styles kept identical */
+        .nav-dropdown { position: relative; }
+        .dropdown-toggle { display: flex; align-items: center; gap: var(--space-xs); cursor: pointer; text-decoration: none; }
+        .dropdown-arrow { font-size: 0.75rem; transition: transform var(--transition-fast); color: var(--text-tertiary); }
+        .nav-dropdown:hover .dropdown-arrow { transform: rotate(180deg); color: var(--primary); }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-2xl);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            margin-top: var(--space-sm);
+        }
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .personal-menu { min-width: min(1000px, 85vw); max-width: 1200px; left: 175%; transform: translateX(calc(-50% + 80px)) translateY(10px); }
+        .nav-dropdown:hover .personal-menu { transform: translateX(calc(-50% + 80px)) translateY(0); }
+        .business-menu { min-width: min(1000px, 85vw); max-width: 1200px; left: 90%; transform: translateX(calc(-50% + 120px)) translateY(10px); }
+        .nav-dropdown:hover .business-menu { transform: translateX(calc(-50% + 120px)) translateY(0); }
+        .kids-menu { min-width: min(500px, 90vw); left: 50%; transform: translateX(-50%) translateY(10px); }
+        .nav-dropdown:hover .kids-menu { transform: translateX(-50%) translateY(0); }
+        .company-menu { min-width: min(700px, 85vw); left: 50%; transform: translateX(calc(-50% + 40px)) translateY(10px); }
+        .nav-dropdown:hover .company-menu { transform: translateX(calc(-50% + 40px)) translateY(0); }
+
+        .dropdown-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-lg); }
+        .business-menu .dropdown-grid { grid-template-columns: repeat(6, 1fr); }
+        .company-menu .dropdown-grid.two-columns { grid-template-columns: repeat(3, 1fr); }
+        .dropdown-col { min-width: 0; }
+
+        .dropdown-section-header {
+            display: flex; align-items: center; gap: var(--space-xs);
+            color: var(--text-tertiary); font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: var(--space-md); padding-bottom: var(--space-xs);
+            border-bottom: 1px solid var(--border-light);
+            cursor: default; pointer-events: none;
+        }
+
+        .dropdown-link {
+            display: flex; align-items: center; gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.9rem; border-radius: var(--radius-md);
+            transition: all var(--transition-fast); margin-bottom: 2px; cursor: pointer;
+        }
+        .dropdown-link:hover { background: var(--surface-hover); transform: translateX(5px); color: var(--text-primary); }
+        .dropdown-link:active { transform: scale(0.98); background: var(--surface-elevated); }
+
+        .kids-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+        .kids-card {
+            background: rgba(129, 140, 248, 0.05); border-radius: var(--radius-lg);
+            padding: var(--space-md); text-align: center; text-decoration: none;
+            display: block; transition: all 0.3s ease;
+            border: 1px solid rgba(129, 140, 248, 0.2); cursor: pointer;
+        }
+        .kids-card:hover { background: rgba(129, 140, 248, 0.12); border-color: rgba(129, 140, 248, 0.5); transform: translateY(-2px); }
+        .kids-card:active { transform: translateY(0); background: rgba(129, 140, 248, 0.2); }
+        .kids-icon {
+            width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px auto;
+        }
+        .kids-icon i { font-size: 1.5rem; color: white; }
+        .kids-title { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 4px; }
+        .kids-desc { font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.3; }
+
+        .plans-col { background: rgba(99, 102, 241, 0.1); border-radius: var(--radius-lg); padding: var(--space-md); }
+        .plan-link {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: var(--space-sm) var(--space-md); color: var(--text-secondary);
+            text-decoration: none; border-radius: var(--radius-md);
+            transition: all var(--transition-fast); margin-bottom: 2px; cursor: pointer;
+        }
+        .plan-link:hover { background: var(--surface-hover); transform: translateX(5px); color: var(--text-primary); }
+        .plan-link:active { transform: scale(0.98); }
+        .plan-name { font-weight: 500; font-size: 0.9rem; }
+        .plan-price { font-size: 0.8rem; color: var(--text-tertiary); background: var(--surface); padding: 2px 8px; border-radius: var(--radius-full); }
+        .mt-2 { margin-top: 8px; }
+        .mt-3 { margin-top: 16px; }
+
+        /* Mobile nav hidden on desktop */
+        .mobile-nav { display: none; }
+        .mobile-menu-panel { display: none; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+
+        /* ============================================================
+           HERO SECTION WITH FIXED PIGGY BANK ANIMATION
+           ============================================================ */
+        .joint-hero-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            min-height: 80vh;
+        }
+
+        .joint-hero-content {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .joint-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(129, 140, 248, 0.1);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .joint-hero-badge i { font-size: 1rem; }
+
+        .joint-hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.6s ease 0.1s forwards;
+            opacity: 0;
+        }
+
+        .joint-hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .joint-hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 16px 32px;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            transition: var(--transition-bounce);
+            box-shadow: 0 8px 32px rgba(129, 140, 248, 0.3);
+            border: none;
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        .joint-hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(129, 140, 248, 0.5);
+        }
+
+        .joint-hero-cta i { transition: transform 0.3s ease; }
+        .joint-hero-cta:hover i { transform: translateX(4px); }
+
+        .joint-trust-badges {
+            display: flex;
+            gap: 24px;
+            margin-top: 40px;
+            animation: fadeInUp 0.6s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+        }
+
+        .trust-badge i { color: var(--success); font-size: 1rem; }
+
+        /* ===== ANIMATION CONTAINER ===== */
+        .joint-animation-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 500px;
+            animation: fadeInScale 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .animation-scene {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 450px;
+        }
+
+        /* ===== FIXED PIGGY BANK ===== */
+        .piggy-bank-wrapper {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 160px;
+            z-index: 2;
+            animation: piggyFloat 3s ease-in-out infinite;
+        }
+
+        /* Main pink body */
+        .piggy-body {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            height: 105px;
+            background: linear-gradient(180deg, #f9a8d4 0%, #f472b6 30%, #ec4899 100%);
+            border-radius: 50%;
+            border: 3px solid #be185d;
+            box-shadow: 
+                inset 0 -8px 20px rgba(190, 24, 93, 0.2),
+                0 6px 0 #be185d,
+                0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Highlight on body */
+        .piggy-body::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 18px;
+            width: 40px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            transform: rotate(-15deg);
+        }
+
+        /* Snout */
+        .piggy-snout {
+            position: absolute;
+            bottom: 55px;
+            right: -8px;
+            width: 45px;
+            height: 36px;
+            background: #f472b6;
+            border-radius: 50%;
+            border: 3px solid #be185d;
+            box-shadow: 0 2px 0 #be185d;
+        }
+
+        .snout-holes {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 9px;
+        }
+
+        .snout-hole {
+            width: 7px;
+            height: 9px;
+            background: #9d174d;
+            border-radius: 50%;
+        }
+
+        /* Eyes */
+        .piggy-eye {
+            position: absolute;
+            width: 16px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid #be185d;
+            z-index: 5;
+        }
+
+        .piggy-eye-left {
+            top: 32px;
+            right: 15px;
+        }
+
+        .piggy-eye-right {
+            top: 32px;
+            left: 45px;
+        }
+
+        .eye-pupil {
+            position: absolute;
+            width: 8px;
+            height: 9px;
+            background: #1e293b;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: eyeLook 4s ease-in-out infinite;
+        }
+
+        .eye-shine {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            right: 3px;
+        }
+
+        /* Ears */
+        .piggy-ear {
+            position: absolute;
+            width: 22px;
+            height: 25px;
+            background: #f472b6;
+            border-radius: 70% 30% 50% 50%;
+            border: 3px solid #be185d;
+            top: 0px;
+        }
+
+        .piggy-ear-left {
+            left: 30px;
+            transform: rotate(-15deg);
+        }
+
+        .piggy-ear-right {
+            right: 30px;
+            transform: rotate(15deg) scaleX(-1);
+        }
+
+        /* Coin slot */
+        .coin-slot {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 38px;
+            height: 6px;
+            background: #831843;
+            border-radius: 3px;
+            border: 2px solid #be185d;
+            z-index: 10;
+        }
+
+        /* Legs */
+        .piggy-leg {
+            position: absolute;
+            bottom: 5px;
+            width: 20px;
+            height: 14px;
+            background: #ec4899;
+            border-radius: 40%;
+            border: 2px solid #be185d;
+            box-shadow: 0 2px 0 #be185d;
+        }
+
+        .piggy-leg-front-left { left: 32px; }
+        .piggy-leg-front-right { right: 32px; }
+        .piggy-leg-back-left { left: 18px; bottom: 7px; width: 15px; height: 10px; }
+        .piggy-leg-back-right { right: 18px; bottom: 7px; width: 15px; height: 10px; }
+
+        /* Tail */
+        .piggy-tail {
+            position: absolute;
+            left: 0px;
+            top: 38px;
+            width: 18px;
+            height: 18px;
+            border: 3px solid #be185d;
+            border-radius: 50%;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            transform: rotate(-40deg);
+        }
+
+        /* Coins visible inside body */
+        .piggy-coins-stack {
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .piggy-coin {
+            width: 24px;
+            height: 12px;
+            background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 50%;
+            border: 2px solid #d97706;
+            margin-top: -5px;
+            position: relative;
+        }
+
+        .piggy-coin:first-child { margin-top: 0; }
+
+        .piggy-coin::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 5px;
+            width: 14px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+
+        /* ===== USER CARDS ===== */
+        .user-card {
+            position: absolute;
+            width: 90px;
+            height: 110px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(51, 65, 85, 0.9));
+            border: 1px solid rgba(129, 140, 248, 0.3);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: var(--shadow-lg);
+            z-index: 4;
+        }
+
+        .user-card-left {
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: floatLeft 3s ease-in-out infinite;
+        }
+
+        .user-card-right {
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: floatRight 3s ease-in-out infinite 0.5s;
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        .user-name {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .user-balance {
+            color: var(--success);
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* ===== FLYING COINS ===== */
+        .flying-coin {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(251, 191, 36, 0.6), inset 0 1px 3px rgba(255, 255, 255, 0.3);
+            z-index: 5;
+        }
+
+        .flying-coin::before {
+            content: '¢';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #92400e;
+        }
+
+        .coin-1 { left: 120px; top: 50%; animation: flyCoinRight 2.5s ease-in-out infinite; }
+        .coin-2 { left: 120px; top: 58%; animation: flyCoinRight 2.5s ease-in-out infinite 0.6s; }
+        .coin-3 { right: 120px; top: 50%; animation: flyCoinLeft 2.5s ease-in-out infinite 0.9s; }
+        .coin-4 { right: 120px; top: 58%; animation: flyCoinLeft 2.5s ease-in-out infinite 1.5s; }
+
+        /* ===== PARTICLES ===== */
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .particle-1 { left: 50%; top: 45%; animation: particleFloat 3s ease-in-out infinite; }
+        .particle-2 { left: 38%; top: 55%; animation: particleFloat 3s ease-in-out infinite 0.7s; }
+        .particle-3 { left: 62%; top: 40%; animation: particleFloat 3s ease-in-out infinite 1.4s; }
+        .particle-4 { left: 45%; top: 50%; animation: particleFloat 3s ease-in-out infinite 2.1s; }
+
+        /* ===== SPEND IN SYNC SECTION ===== */
+        .spend-sync-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .spend-sync-visual {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 400px;
+        }
+
+        .sync-phone-mockup {
+            position: relative;
+            width: 280px;
+            height: 480px;
+            background: linear-gradient(180deg, var(--surface) 0%, var(--bg-secondary) 100%);
+            border: 2px solid var(--border-medium);
+            border-radius: 36px;
+            padding: 12px;
+            box-shadow: var(--shadow-2xl);
+            overflow: hidden;
+        }
+
+        .sync-phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            border-radius: 24px;
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sync-app-header { display: flex; align-items: center; justify-content: space-between; }
+        .sync-app-title { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); }
+        .sync-app-title span { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sync-avatar-group { display: flex; align-items: center; }
+        .sync-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: white; border: 2px solid var(--bg-primary); }
+        .sync-avatar:nth-child(2) { background: linear-gradient(135deg, #f472b6, #ec4899); margin-left: -8px; }
+
+        .sync-balance-card { background: linear-gradient(135deg, rgba(129, 140, 248, 0.15), rgba(167, 139, 250, 0.1)); border: 1px solid rgba(129, 140, 248, 0.2); border-radius: var(--radius-lg); padding: 14px; }
+        .sync-balance-label { font-size: 0.7rem; color: var(--text-tertiary); margin-bottom: 2px; }
+        .sync-balance-amount { font-size: 1.3rem; font-weight: 700; color: var(--text-primary); }
+
+        .sync-transaction { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+        .sync-transaction-icon { width: 32px; height: 32px; border-radius: 50%; background: rgba(129, 140, 248, 0.15); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+        .sync-transaction-icon.purple { color: var(--primary); }
+        .sync-transaction-icon.pink { color: #f472b6; }
+        .sync-transaction-details { flex: 1; }
+        .sync-transaction-name { font-size: 0.8rem; font-weight: 600; color: var(--text-primary); }
+        .sync-transaction-date { font-size: 0.65rem; color: var(--text-tertiary); }
+        .sync-transaction-amount { font-size: 0.8rem; font-weight: 600; }
+        .sync-transaction-amount.in { color: var(--success); }
+        .sync-transaction-amount.out { color: var(--text-secondary); }
+
+        .sync-floating-card {
+            position: absolute;
+            right: -25px;
+            top: 50px;
+            width: 130px;
+            height: 85px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(51, 65, 85, 0.95));
+            border: 1px solid rgba(129, 140, 248, 0.25);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            box-shadow: var(--shadow-xl);
+            z-index: 5;
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        .sync-floating-card-label { font-size: 0.6rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .sync-floating-card-amount { font-size: 1rem; font-weight: 700; color: var(--success); }
+        .sync-floating-card-sub { font-size: 0.65rem; color: var(--text-tertiary); margin-top: 2px; }
+
+        .sync-floating-badge {
+            position: absolute;
+            left: -15px;
+            bottom: 90px;
+            background: var(--success);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-lg);
+            animation: floatBadge 3s ease-in-out infinite 1s;
+            z-index: 5;
+        }
+
+        .spend-sync-content { flex: 1; max-width: 480px; }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(129, 140, 248, 0.1);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            margin-bottom: 20px;
+        }
+
+        .section-title { font-size: 2.5rem; font-weight: 700; line-height: 1.15; margin-bottom: 16px; color: var(--text-primary); }
+        .section-description { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 28px; }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            transition: var(--transition-bounce);
+            box-shadow: 0 6px 24px rgba(129, 140, 248, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(129, 140, 248, 0.5); }
+        .btn-cta i { transition: transform 0.3s ease; }
+        .btn-cta:hover i { transform: translateX(4px); }
+
+        /* ===== TWO CARDS SECTION ===== */
+        .cards-section { max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: flex; align-items: center; gap: 60px; }
+        .cards-section.reversed { flex-direction: row-reverse; }
+        .cards-visual { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; min-height: 420px; }
+        .card-mockup { position: relative; }
+
+        .bank-card { width: 340px; height: 210px; border-radius: var(--radius-xl); padding: 24px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; box-shadow: var(--shadow-xl); }
+        .bank-card.physical { background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%); border: 1px solid var(--border-medium); z-index: 2; }
+        .bank-card.virtual { background: linear-gradient(135deg, rgba(129, 140, 248, 0.2), rgba(167, 139, 250, 0.15)); border: 1px solid rgba(129, 140, 248, 0.3); backdrop-filter: blur(20px); position: absolute; top: 40px; right: -60px; z-index: 1; transform: rotate(8deg); }
+
+        .card-chip { width: 40px; height: 30px; background: linear-gradient(135deg, #fbbf24, #d97706); border-radius: 6px; opacity: 0.8; }
+        .card-number { font-family: 'Courier New', monospace; font-size: 1.1rem; letter-spacing: 2px; color: var(--text-secondary); word-spacing: 8px; }
+        .card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .card-holder { font-size: 0.7rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; }
+        .card-holder-name { font-size: 0.9rem; color: var(--text-primary); font-weight: 500; }
+        .card-brand { font-size: 1.5rem; font-weight: 700; color: var(--text-secondary); letter-spacing: -1px; }
+        .card-label-tag { position: absolute; top: 16px; right: 16px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: var(--radius-full); z-index: 3; }
+        .card-label-tag.physical-tag { background: rgba(255, 255, 255, 0.1); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.15); }
+        .card-label-tag.virtual-tag { background: rgba(129, 140, 248, 0.2); color: var(--primary); border: 1px solid rgba(129, 140, 248, 0.3); }
+        .card-design-strip { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary), #f472b6, var(--accent)); }
+        .plan-badge { display: flex; align-items: center; gap: 6px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.25); color: var(--warning); font-size: 0.7rem; padding: 6px 12px; border-radius: var(--radius-full); margin-top: 16px; }
+        .plan-note { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 8px; font-style: italic; }
+
+        /* ===== SECURITY SECTION ===== */
+        .security-section { max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: flex; align-items: center; gap: 60px; }
+        .security-visual { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; min-height: 450px; }
+        .security-shield { position: relative; width: 200px; height: 220px; display: flex; align-items: center; justify-content: center; z-index: 2; }
+        .shield-icon-main { font-size: 8rem; color: var(--primary); filter: drop-shadow(0 0 40px rgba(129, 140, 248, 0.3)); animation: shieldPulse 3s ease-in-out infinite; }
+        .security-stat-card { position: absolute; background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 14px 18px; box-shadow: var(--shadow-lg); }
+        .security-stat-card.top-right { top: 10px; right: -40px; animation: floatCard 4s ease-in-out infinite 0.5s; }
+        .security-stat-card.bottom-left { bottom: 20px; left: -50px; animation: floatCard 4s ease-in-out infinite 1.5s; }
+        .security-stat-card.bottom-right { bottom: 10px; right: -30px; animation: floatCard 4s ease-in-out infinite 2.5s; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { font-size: 0.7rem; color: var(--text-tertiary); margin-top: 2px; }
+        .chat-bubble-mockup { position: absolute; left: -60px; top: 50%; transform: translateY(-50%); background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 12px 16px; box-shadow: var(--shadow-lg); max-width: 160px; animation: floatCard 4s ease-in-out infinite 1s; z-index: 3; }
+        .chat-bubble-mockup .chat-name { font-size: 0.75rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .chat-bubble-mockup .chat-msg { font-size: 0.7rem; color: var(--text-tertiary); }
+        .chat-bubble-mockup .chat-indicator { display: inline-block; width: 6px; height: 6px; background: var(--success); border-radius: 50%; margin-right: 4px; }
+        .security-dots-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle, rgba(129, 140, 248, 0.1) 1px, transparent 1px); background-size: 20px 20px; border-radius: var(--radius-xl); z-index: 0; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes floatLeft {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-8px); }
+        }
+        @keyframes floatRight {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(8px); }
+        }
+        @keyframes piggyFloat {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-6px); }
+        }
+        @keyframes eyeLook {
+            0%, 45%, 55%, 100% { transform: translate(-50%, -50%); }
+            50% { transform: translate(-40%, -50%); }
+        }
+        @keyframes flyCoinRight {
+            0% { left: 120px; top: 54%; opacity: 1; transform: scale(1) rotate(0deg); }
+            30% { left: 65%; top: 20%; opacity: 1; transform: scale(1.15) rotate(120deg); }
+            60% { left: 52%; top: 70%; opacity: 0.9; transform: scale(0.9) rotate(300deg); }
+            80% { left: 50%; top: 85%; opacity: 0.4; transform: scale(0.5) rotate(420deg); }
+            100% { left: 50%; top: 88%; opacity: 0; transform: scale(0.2) rotate(540deg); }
+        }
+        @keyframes flyCoinLeft {
+            0% { right: 120px; top: 54%; opacity: 1; transform: scale(1) rotate(0deg); }
+            30% { right: 65%; top: 20%; opacity: 1; transform: scale(1.15) rotate(-120deg); }
+            60% { right: 52%; top: 70%; opacity: 0.9; transform: scale(0.9) rotate(-300deg); }
+            80% { right: 50%; top: 85%; opacity: 0.4; transform: scale(0.5) rotate(-420deg); }
+            100% { right: 50%; top: 88%; opacity: 0; transform: scale(0.2) rotate(-540deg); }
+        }
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translate(0, 0) scale(0); }
+            50% { opacity: 0.8; transform: translate(20px, -30px) scale(1.5); }
+            100% { opacity: 0; transform: translate(-20px, -60px) scale(0); }
+        }
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.05); }
+        }
+        @keyframes shieldPulse {
+            0%, 100% { filter: drop-shadow(0 0 40px rgba(129, 140, 248, 0.3)); }
+            50% { filter: drop-shadow(0 0 60px rgba(129, 140, 248, 0.5)); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1150px) and (min-width: 901px) {
+            .nav-item i { display: none !important; }
+            .nav-item span { display: inline-block !important; }
+            .nav-item.btn-primary i { display: none !important; }
+            .nav-item.btn-primary span { display: inline-block !important; }
+            .nav-dropdown .dropdown-menu { min-width: 300px !important; max-width: 400px !important; left: 0 !important; right: auto !important; transform: translateY(10px) !important; max-height: 80vh; overflow-y: auto; }
+            .nav-dropdown:hover .dropdown-menu { transform: translateY(0) !important; }
+            .personal-menu, .business-menu, .company-menu, .kids-menu { left: 0 !important; right: auto !important; transform: translateY(10px) !important; min-width: 300px !important; max-width: 400px !important; }
+            .nav-dropdown:hover .personal-menu, .nav-dropdown:hover .business-menu, .nav-dropdown:hover .company-menu, .nav-dropdown:hover .kids-menu { transform: translateY(0) !important; }
+            .nav-dropdown .dropdown-grid { grid-template-columns: 1fr !important; }
+            .business-menu .dropdown-grid, .company-menu .dropdown-grid.two-columns { grid-template-columns: 1fr !important; }
+            .kids-grid { grid-template-columns: 1fr !important; }
+        }
+
+        @media (max-width: 900px) and (min-width: 769px) {
+            .nav-item { display: flex !important; align-items: center !important; justify-content: center !important; padding: 0.6rem !important; aspect-ratio: 1/1; }
+            .nav-item i { display: inline-block !important; font-size: 1.125rem; margin: 0 !important; }
+            .nav-item span { display: none !important; }
+            .nav-item.btn-primary { padding: 0.6rem !important; }
+            .nav-item.btn-primary i { display: inline-block !important; margin: 0 !important; }
+        }
+
+        @media (max-width: 768px) {
+            .floating-nav { display: none; }
+            .mobile-nav { display: flex; position: fixed; top: 0; left: 0; right: 0; background: var(--surface); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light); padding: var(--space-md) var(--space-lg); z-index: 1000; align-items: center; justify-content: space-between; height: 70px; box-sizing: border-box; }
+            .mobile-menu-btn { display: flex; background: none; border: none; color: var(--text-secondary); font-size: 1.25rem; cursor: pointer; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: var(--radius-md); }
+            .mobile-menu-panel { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--bg-secondary); z-index: 999; flex-direction: column; overflow: hidden; border-top: 1px solid var(--border-light); }
+            .mobile-menu-panel.active { display: flex; }
+            body { padding-top: 70px; }
+        }
+
+        @media (max-width: 968px) {
+            .joint-hero-section { flex-direction: column; text-align: center; gap: 40px; padding: 60px 24px 40px; }
+            .joint-hero-content { max-width: 100%; }
+            .joint-hero-title { font-size: 2.5rem; }
+            .joint-hero-subtitle { font-size: 1.1rem; }
+            .joint-trust-badges { justify-content: center; flex-wrap: wrap; }
+            .joint-animation-container { min-height: 400px; max-width: 100%; }
+            .animation-scene { height: 380px; }
+            .piggy-bank-wrapper { width: 140px; height: 140px; bottom: 70px; }
+            .piggy-body { width: 110px; height: 88px; }
+            .user-card { width: 75px; height: 95px; }
+            .spend-sync-section { flex-direction: column; text-align: center; gap: 40px; padding: 60px 24px; }
+            .spend-sync-content { max-width: 100%; }
+            .cards-section { flex-direction: column !important; text-align: center; gap: 40px; padding: 60px 24px; }
+            .cards-visual { min-height: 380px; }
+            .bank-card { width: 280px; height: 175px; }
+            .bank-card.virtual { right: -30px; top: 30px; }
+            .security-section { flex-direction: column; text-align: center; gap: 40px; padding: 60px 24px; }
+            .security-visual { min-height: 400px; }
+            .section-title { font-size: 2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .joint-hero-title { font-size: 2rem; }
+            .piggy-bank-wrapper { width: 110px; height: 110px; bottom: 50px; }
+            .piggy-body { width: 90px; height: 72px; bottom: 15px; }
+            .user-card { width: 60px; height: 78px; }
+            .user-avatar { width: 30px; height: 30px; font-size: 0.9rem; }
+            .section-title { font-size: 1.6rem; }
+            .bank-card { width: 240px; height: 150px; }
+            .shield-icon-main { font-size: 6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION (kept intact from your project) -->
+    <nav class="floating-nav" aria-label="Desktop navigation">
+        <div class="container">
+            <a href="../../../index.html" class="nav-brand">Nexus<span class="accent">Bank</span></a>
+            <div class="nav-row">
+                <div class="nav-dropdown">
+                    <button class="nav-item dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i><span>Personal</span><i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </button>
+                    <div class="dropdown-menu personal-menu" role="menu">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <div class="dropdown-section-header"><span>Accounts</span></div>
+                                <a href="../Bank-Account/index.html" class="dropdown-link"><span>Bank Account</span></a>
+                                <a href="../Joint-Account/index.html" class="dropdown-link"><span>Joint Account</span></a>
+                                <a href="../Parents-and-guardians/index.html" class="dropdown-link"><span>Parents and guardians</span></a>
+                                <div class="dropdown-section-header mt-3"><span>Payments</span></div>
+                                <a href="../../Cards/NexusBank-Pay/index.html" class="dropdown-link"><span>NexusBank Pay</span></a>
+                            </div>
+                            <div class="dropdown-col">
+                                <div class="dropdown-section-header"><span>Security & Protection</span></div>
+                                <a href="../../../security/Security-&-Protection/How-We-Protect-Your-Money/index.html" class="dropdown-link"><span>How We Protect Your Money</span></a>
+                                <div class="dropdown-section-header mt-3"><span>Help</span></div>
+                                <a href="../../../help/Contact-Us/index.html" class="dropdown-link"><span>Contact Us</span></a>
+                                <a href="../../../help/Help-Centre/index.html" class="dropdown-link"><span>Help Centre</span></a>
+                                <a href="../../../help/System-Status/index.html" class="dropdown-link"><span>System Status</span></a>
+                            </div>
+                            <div class="dropdown-col plans-col"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-item dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-briefcase"></i><span>Business</span><i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </button>
+                    <div class="dropdown-menu business-menu" role="menu">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <div class="dropdown-section-header"><span>Core Banking</span></div>
+                                <a href="../../../business/money-transfers.html" class="dropdown-link"><span>Money Transfers</span></a>
+                                <a href="../../../business/bills.html" class="dropdown-link"><span>Bills</span></a>
+                                <a href="../../../business/online-payments.html" class="dropdown-link"><span>Online Payment</span></a>
+                            </div>
+                            <div class="dropdown-col">
+                                <div class="dropdown-section-header"><span>Finance</span></div>
+                                <a href="../../../business/savings.html" class="dropdown-link"><span>Savings</span></a>
+                                <a href="../../../business/credits.html" class="dropdown-link"><span>Credits</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="javascript:void(0)" class="nav-item dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-child"></i><span>Kids & Teens</span><i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <div class="dropdown-menu kids-menu" role="menu">
+                        <div class="kids-grid">
+                            <a href="../../../kids-teens/account.html" class="kids-card"><div class="kids-icon"><i class="fas fa-child"></i></div><div class="kids-title">Kids & Teens account</div><div class="kids-desc">For ages 6-17</div></a>
+                            <a href="../../../kids-teens/parents.html" class="kids-card"><div class="kids-icon"><i class="fas fa-users"></i></div><div class="kids-title">Parents and guardians</div><div class="kids-desc">Manage and monitor</div></a>
+                            <a href="../../../help/Help-Centre/index.html" class="kids-card"><div class="kids-icon"><i class="fas fa-circle-question"></i></div><div class="kids-title">Help Center</div><div class="kids-desc">Get support</div></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-item dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-building"></i><span>Company</span><i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </button>
+                    <div class="dropdown-menu company-menu" role="menu">
+                        <div class="dropdown-grid two-columns">
+                            <div class="dropdown-col">
+                                <div class="dropdown-section-header"><span>General</span></div>
+                                <a href="../../../company/about.html" class="dropdown-link"><span>About Us</span></a>
+                                <a href="../../../company/news.html" class="dropdown-link"><span>News & Media</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-spacer"></div>
+                <a href="../../../login.html?tab=register" class="nav-item btn-primary"><i class="fas fa-user-plus"></i><span>Register</span></a>
+                <a href="../../../login.html" class="nav-item btn-ghost"><i class="fas fa-sign-in-alt"></i><span>Sign In</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION WITH FIXED PIGGY BANK ===== -->
+    <section class="joint-hero-section">
+        <div class="joint-hero-content">
+            <div class="joint-hero-badge"><i class="fas fa-users"></i>Joint Accounts</div>
+            <h1 class="joint-hero-title">Shared money<br>made simple</h1>
+            <p class="joint-hero-subtitle">Pairs, parents, or partners: manage your money better, together. Open a free joint account in minutes, in the app.</p>
+            <a href="../../../login.html?tab=register" class="joint-hero-cta">Open a joint account<i class="fas fa-arrow-right"></i></a>
+            <div class="joint-trust-badges">
+                <div class="trust-badge"><i class="fas fa-shield-halved"></i>FSCS Protected</div>
+                <div class="trust-badge"><i class="fas fa-bolt"></i>Instant Setup</div>
+                <div class="trust-badge"><i class="fas fa-circle-check"></i>No Monthly Fees</div>
+            </div>
+        </div>
+        <div class="joint-animation-container">
+            <div class="animation-scene">
+                <!-- User Cards -->
+                <div class="user-card user-card-left">
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                    <span class="user-name">You</span>
+                    <span class="user-balance">$2,450</span>
+                </div>
+                <div class="user-card user-card-right">
+                    <div class="user-avatar"><i class="fas fa-user-group"></i></div>
+                    <span class="user-name">Partner</span>
+                    <span class="user-balance">$1,630</span>
+                </div>
+                
+                <!-- Flying Coins -->
+                <div class="flying-coin coin-1"></div>
+                <div class="flying-coin coin-2"></div>
+                <div class="flying-coin coin-3"></div>
+                <div class="flying-coin coin-4"></div>
+                
+                <!-- FIXED PIGGY BANK - Single wrapper with all parts inside -->
+                <div class="piggy-bank-wrapper">
+                    <!-- Ears -->
+                    <div class="piggy-ear piggy-ear-left"></div>
+                    <div class="piggy-ear piggy-ear-right"></div>
+                    
+                    <!-- Eyes -->
+                    <div class="piggy-eye piggy-eye-left">
+                        <div class="eye-pupil"><div class="eye-shine"></div></div>
+                    </div>
+                    <div class="piggy-eye piggy-eye-right">
+                        <div class="eye-pupil"><div class="eye-shine"></div></div>
+                    </div>
+                    
+                    <!-- Snout -->
+                    <div class="piggy-snout">
+                        <div class="snout-holes">
+                            <div class="snout-hole"></div>
+                            <div class="snout-hole"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Coin Slot -->
+                    <div class="coin-slot"></div>
+                    
+                    <!-- Main Body -->
+                    <div class="piggy-body">
+                        <div class="piggy-coins-stack">
+                            <div class="piggy-coin"></div>
+                            <div class="piggy-coin"></div>
+                            <div class="piggy-coin"></div>
+                            <div class="piggy-coin"></div>
+                            <div class="piggy-coin"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Legs -->
+                    <div class="piggy-leg piggy-leg-back-left"></div>
+                    <div class="piggy-leg piggy-leg-back-right"></div>
+                    <div class="piggy-leg piggy-leg-front-left"></div>
+                    <div class="piggy-leg piggy-leg-front-right"></div>
+                    
+                    <!-- Tail -->
+                    <div class="piggy-tail"></div>
+                </div>
+                
+                <!-- Particles -->
+                <div class="particle particle-1"></div>
+                <div class="particle particle-2"></div>
+                <div class="particle particle-3"></div>
+                <div class="particle particle-4"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SPEND IN SYNC SECTION ===== -->
+    <section class="spend-sync-section">
+        <div class="spend-sync-visual">
+            <div class="sync-phone-mockup">
+                <div class="sync-phone-screen">
+                    <div class="sync-app-header">
+                        <div class="sync-app-title">Nexus<span>Bank</span> Joint</div>
+                        <div class="sync-avatar-group">
+                            <div class="sync-avatar"><i class="fas fa-user"></i></div>
+                            <div class="sync-avatar"><i class="fas fa-user-group"></i></div>
+                        </div>
+                    </div>
+                    <div class="sync-balance-card">
+                        <div class="sync-balance-label">Joint Balance</div>
+                        <div class="sync-balance-amount">$4,080.00</div>
+                    </div>
+                    <div style="font-size: 0.72rem; color: var(--text-tertiary); font-weight: 600;">Recent Activity</div>
+                    <div class="sync-transaction">
+                        <div class="sync-transaction-icon purple"><i class="fas fa-arrow-down"></i></div>
+                        <div class="sync-transaction-details">
+                            <div class="sync-transaction-name">Salary Deposit</div>
+                            <div class="sync-transaction-date">Today, 9:41 AM</div>
+                        </div>
+                        <div class="sync-transaction-amount in">+$2,450</div>
+                    </div>
+                    <div class="sync-transaction">
+                        <div class="sync-transaction-icon pink"><i class="fas fa-arrow-down"></i></div>
+                        <div class="sync-transaction-details">
+                            <div class="sync-transaction-name">Partner Deposit</div>
+                            <div class="sync-transaction-date">Today, 9:42 AM</div>
+                        </div>
+                        <div class="sync-transaction-amount in">+$1,630</div>
+                    </div>
+                    <div class="sync-transaction">
+                        <div class="sync-transaction-icon purple"><i class="fas fa-rotate"></i></div>
+                        <div class="sync-transaction-details">
+                            <div class="sync-transaction-name">Rent (Recurring)</div>
+                            <div class="sync-transaction-date">Monthly · 1st</div>
+                        </div>
+                        <div class="sync-transaction-amount out">-$1,500</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sync-floating-card">
+                <div class="sync-floating-card-label">Next Payment</div>
+                <div class="sync-floating-card-amount">$1,500</div>
+                <div class="sync-floating-card-sub">Rent · Dec 1</div>
+            </div>
+            <div class="sync-floating-badge"><i class="fas fa-check-circle"></i> Auto-pay ON</div>
+        </div>
+        <div class="spend-sync-content">
+            <div class="section-label"><i class="fas fa-rotate"></i> Spend in sync</div>
+            <h2 class="section-title">Streamline your joint spend</h2>
+            <p class="section-description">Streamline your joint spend by giving your assets just as much as you need. Plus put assets into a single account to simplify paying bills and save time.</p>
+            <a href="../../../login.html?tab=register" class="btn-cta">Get started<i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- ===== TWO CARDS SECTION ===== -->
+    <section class="cards-section reversed">
+        <div class="cards-visual">
+            <div class="card-mockup">
+                <div class="bank-card physical">
+                    <div class="card-design-strip"></div>
+                    <div class="card-label-tag physical-tag">Physical</div>
+                    <div class="card-chip"></div>
+                    <div class="card-number">4837 •••• •••• 2847</div>
+                    <div class="card-bottom">
+                        <div>
+                            <div class="card-holder">Joint Account</div>
+                            <div class="card-holder-name">Alex & Taylor</div>
+                        </div>
+                        <div class="card-brand">NexusBank</div>
+                    </div>
+                </div>
+                <div class="bank-card virtual">
+                    <div class="card-design-strip"></div>
+                    <div class="card-label-tag virtual-tag">Virtual</div>
+                    <div class="card-chip"></div>
+                    <div class="card-number">9203 •••• •••• 6150</div>
+                    <div class="card-bottom">
+                        <div>
+                            <div class="card-holder">Joint Account</div>
+                            <div class="card-holder-name">Alex & Taylor</div>
+                        </div>
+                        <div class="card-brand">NexusBank</div>
+                    </div>
+                </div>
+                <div class="plan-badge"><i class="fas fa-crown"></i> Metal & Premium on paid plans</div>
+                <p class="plan-note">Paid Plan Terms and subscription fees apply.</p>
+            </div>
+        </div>
+        <div class="spend-sync-content">
+            <div class="section-label"><i class="fas fa-credit-card"></i> Two cards, one vision</div>
+            <h2 class="section-title">Get matching cards for your shared spend</h2>
+            <p class="section-description">Choose from exclusive designs just for joint accounts. Go physical or virtual, and pair them to dedicated Pockets to help you budget together effortlessly.</p>
+            <a href="../../../login.html?tab=register" class="btn-cta">Choose your cards<i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- ===== SECURITY SECTION ===== -->
+    <section class="security-section">
+        <div class="security-visual">
+            <div class="security-dots-bg"></div>
+            <div class="security-shield">
+                <i class="fas fa-shield-halved shield-icon-main"></i>
+            </div>
+            <div class="security-stat-card top-right">
+                <div class="stat-value">67.5B</div>
+                <div class="stat-label">USD in customer funds</div>
+            </div>
+            <div class="security-stat-card bottom-left">
+                <div class="stat-value">£632M+</div>
+                <div class="stat-label">Fraud prevented (2023)</div>
+            </div>
+            <div class="chat-bubble-mockup">
+                <div class="chat-name"><span class="chat-indicator"></span> Hannah</div>
+                <div class="chat-msg">How can I help?</div>
+            </div>
+            <div class="security-stat-card bottom-right">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Award-winning support</div>
+            </div>
+        </div>
+        <div class="spend-sync-content">
+            <div class="section-label"><i class="fas fa-lock"></i> Your money, protected</div>
+            <h2 class="section-title">Trusted with billions</h2>
+            <p class="section-description">Trusted with 67.5 billion USD in customer funds — our cutting-edge security features, and award-winning customer support, helped prevent more than £632 million worth of fraud in 2023 alone.</p>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px;">
+                <div style="display: flex; align-items: center; gap: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                    <i class="fas fa-headset" style="color: var(--primary);"></i> We're here to help, 24/7 - wherever you are
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                    <i class="fas fa-lock" style="color: var(--primary);"></i> Encrypted chats for secure communication
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; color: var(--text-secondary); font-size: 0.9rem;">
+                    <i class="fas fa-shield" style="color: var(--primary);"></i> Algorithms built to detect suspicious activity
+                </div>
+            </div>
+            <a href="../../../security/Security-&-Protection/How-We-Protect-Your-Money/index.html" class="btn-cta">Read more<i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+</body>
+</html>

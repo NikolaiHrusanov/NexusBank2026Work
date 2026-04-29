@@ -1746,6 +1746,920 @@
     
     
 }
+
+/* ===== MONEY TRANSFERS SECTION ===== */
+.money-transfers {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px;
+}
+
+.transfers-container {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    padding: 60px;
+    position: relative;
+}
+
+/* Left Content */
+.transfers-content {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+}
+
+.transfers-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: var(--primary);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+.transfers-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.transfers-title .gradient-text {
+    background: linear-gradient(135deg, #818cf8, #a78bfa, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.transfers-description {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    line-height: 1.7;
+    margin-bottom: 36px;
+}
+
+.transfers-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-get-started {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 14px 28px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-bounce);
+    box-shadow: 0 4px 15px rgba(129, 140, 248, 0.3);
+    font-family: var(--font-body);
+}
+
+.btn-get-started:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 140, 248, 0.4);
+}
+
+.btn-get-started i {
+    font-size: 0.9rem;
+    transition: transform var(--transition-fast);
+}
+
+.btn-get-started:hover i {
+    transform: translateX(3px);
+}
+
+.btn-speak-sales {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--text-primary);
+    padding: 14px 28px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 1px solid var(--border-medium);
+    cursor: pointer;
+    transition: all var(--transition-bounce);
+    font-family: var(--font-body);
+}
+
+.btn-speak-sales:hover {
+    background: var(--surface-hover);
+    border-color: var(--text-tertiary);
+}
+
+/* ===== FUTURISTIC BANKING VISUAL ===== */
+.transfers-visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    min-height: 500px;
+}
+
+.globe-scene {
+    position: relative;
+    width: 420px;
+    height: 420px;
+}
+
+/* Dark tech background grid */
+.tech-grid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: 
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(129, 140, 248, 0.03) 28px, rgba(129, 140, 248, 0.03) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(129, 140, 248, 0.03) 28px, rgba(129, 140, 248, 0.03) 29px);
+    mask-image: radial-gradient(circle, black 40%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle, black 40%, transparent 70%);
+    opacity: 0.5;
+}
+
+/* Orbit rings */
+.orbit-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transform-style: preserve-3d;
+}
+
+.orbit-outer {
+    width: 340px;
+    height: 340px;
+    margin: -170px 0 0 -170px;
+    border-color: rgba(34, 211, 238, 0.15);
+    box-shadow: 
+        0 0 30px rgba(34, 211, 238, 0.08),
+        inset 0 0 30px rgba(34, 211, 238, 0.04);
+    transform: rotateX(60deg);
+    animation: orbitSpin 20s linear infinite;
+}
+
+.orbit-middle {
+    width: 280px;
+    height: 280px;
+    margin: -140px 0 0 -140px;
+    border-color: rgba(129, 140, 248, 0.2);
+    box-shadow: 
+        0 0 25px rgba(129, 140, 248, 0.06),
+        inset 0 0 25px rgba(129, 140, 248, 0.03);
+    transform: rotateX(-50deg) rotateY(30deg);
+    animation: orbitSpin 15s linear infinite reverse;
+}
+
+.orbit-inner {
+    width: 200px;
+    height: 200px;
+    margin: -100px 0 0 -100px;
+    border-color: rgba(167, 139, 250, 0.12);
+    box-shadow: 0 0 20px rgba(167, 139, 250, 0.04);
+    transform: rotateX(70deg);
+    animation: orbitSpin 12s linear infinite;
+}
+
+@keyframes orbitSpin {
+    from { transform: rotateX(60deg) rotateY(0deg); }
+    to { transform: rotateX(60deg) rotateY(360deg); }
+}
+
+/* 3D Globe */
+.futuristic-globe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    z-index: 5;
+    box-shadow: 
+        0 0 40px rgba(34, 211, 238, 0.3),
+        0 0 80px rgba(129, 140, 248, 0.2),
+        0 0 120px rgba(34, 211, 238, 0.1),
+        0 0 160px rgba(129, 140, 248, 0.05);
+}
+
+/* Globe core - neon blue/cyan gradient */
+.globe-core {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: 
+        radial-gradient(circle at 40% 30%, rgba(34, 211, 238, 0.8) 0%, rgba(34, 211, 238, 0.3) 25%, transparent 50%),
+        radial-gradient(circle at 35% 40%, rgba(129, 140, 248, 0.6) 0%, transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(6, 11, 26, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%),
+        radial-gradient(circle at 60% 60%, rgba(16, 185, 129, 0.3) 0%, transparent 40%);
+}
+
+/* Grid lines on globe */
+.globe-grid-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: 
+        radial-gradient(circle at 50% 50%, transparent 75%, rgba(34, 211, 238, 0.1) 76%, rgba(34, 211, 238, 0.1) 78%, transparent 78%),
+        radial-gradient(circle at 50% 50%, transparent 50%, rgba(34, 211, 238, 0.08) 51%, rgba(34, 211, 238, 0.08) 53%, transparent 53%),
+        linear-gradient(0deg, transparent 48%, rgba(34, 211, 238, 0.1) 48%, rgba(34, 211, 238, 0.1) 52%, transparent 52%),
+        linear-gradient(90deg, transparent 48%, rgba(34, 211, 238, 0.1) 48%, rgba(34, 211, 238, 0.1) 52%, transparent 52%),
+        linear-gradient(45deg, transparent 49%, rgba(129, 140, 248, 0.06) 49%, rgba(129, 140, 248, 0.06) 51%, transparent 51%),
+        linear-gradient(-45deg, transparent 49%, rgba(129, 140, 248, 0.06) 49%, rgba(129, 140, 248, 0.06) 51%, transparent 51%);
+    mask-image: radial-gradient(circle, black 75%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle, black 75%, transparent 78%);
+}
+
+/* Horizon line glow */
+.globe-horizon {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.4), rgba(129, 140, 248, 0.3), transparent);
+    transform: translateY(-50%);
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+}
+
+/* Highlight reflection */
+.globe-highlight {
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 40%;
+    height: 30%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+}
+
+/* Orbiting money icons */
+.orbit-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 6;
+}
+
+.money-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 0 15px currentColor;
+}
+
+/* Coin styles */
+.coin-gold {
+    background: radial-gradient(circle at 40% 35%, #fbbf24, #b45309);
+    color: #fef3c7;
+    border: 2px solid #f59e0b;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+}
+
+.coin-silver {
+    background: radial-gradient(circle at 40% 35%, #cbd5e1, #475569);
+    color: #f1f5f9;
+    border: 2px solid #94a3b8;
+    box-shadow: 0 0 15px rgba(148, 163, 184, 0.5);
+}
+
+.coin-blue {
+    background: radial-gradient(circle at 40% 35%, #60a5fa, #1d4ed8);
+    color: #dbeafe;
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.coin-teal {
+    background: radial-gradient(circle at 40% 35%, #5eead4, #0f766e);
+    color: #ccfbf1;
+    border: 2px solid #14b8a6;
+    box-shadow: 0 0 15px rgba(20, 184, 166, 0.5);
+}
+
+/* Banknote styles */
+.banknote-green {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: #d1fae5;
+    border: 2px solid #10b981;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+}
+
+.banknote-purple {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: #ede9fe;
+    border: 2px solid #7c3aed;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+}
+
+/* Orbit positions */
+.orbit-item-1 { margin: -170px 0 0 0; animation: orbit1 8s linear infinite; }
+.orbit-item-2 { margin: 0 0 0 170px; animation: orbit2 10s linear infinite; }
+.orbit-item-3 { margin: 150px 0 0 0; animation: orbit3 9s linear infinite; }
+.orbit-item-4 { margin: 0 0 0 -160px; animation: orbit4 11s linear infinite; }
+.orbit-item-5 { margin: -100px 0 0 -140px; animation: orbit5 7s linear infinite; }
+.orbit-item-6 { margin: 100px 0 0 140px; animation: orbit6 8.5s linear infinite; }
+
+@keyframes orbit1 {
+    from { transform: rotate(0deg) translateX(170px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(170px) rotate(-360deg); }
+}
+
+@keyframes orbit2 {
+    from { transform: rotate(90deg) translateX(170px) rotate(-90deg); }
+    to { transform: rotate(450deg) translateX(170px) rotate(-450deg); }
+}
+
+@keyframes orbit3 {
+    from { transform: rotate(180deg) translateX(165px) rotate(-180deg); }
+    to { transform: rotate(540deg) translateX(165px) rotate(-540deg); }
+}
+
+@keyframes orbit4 {
+    from { transform: rotate(270deg) translateX(160px) rotate(-270deg); }
+    to { transform: rotate(630deg) translateX(160px) rotate(-630deg); }
+}
+
+@keyframes orbit5 {
+    from { transform: rotate(45deg) translateX(155px) rotate(-45deg); }
+    to { transform: rotate(405deg) translateX(155px) rotate(-405deg); }
+}
+
+@keyframes orbit6 {
+    from { transform: rotate(225deg) translateX(150px) rotate(-225deg); }
+    to { transform: rotate(585deg) translateX(150px) rotate(-585deg); }
+}
+
+/* Particles */
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 50%;
+    z-index: 4;
+    box-shadow: 0 0 6px var(--accent);
+}
+
+.particle-1 { top: 8%; left: 45%; opacity: 0.7; }
+.particle-2 { top: 15%; left: 65%; opacity: 0.5; }
+.particle-3 { top: 55%; right: 8%; opacity: 0.6; }
+.particle-4 { bottom: 15%; left: 30%; opacity: 0.8; }
+.particle-5 { top: 40%; left: 10%; opacity: 0.4; }
+.particle-6 { bottom: 25%; right: 20%; opacity: 0.6; }
+.particle-7 { top: 30%; right: 15%; opacity: 0.5; }
+.particle-8 { bottom: 10%; left: 55%; opacity: 0.7; }
+
+/* Data streams */
+.data-stream {
+    position: absolute;
+    background: linear-gradient(to bottom, transparent, rgba(34, 211, 238, 0.15), transparent);
+    opacity: 0.3;
+}
+
+.stream-1 {
+    top: 5%;
+    left: 48%;
+    width: 1px;
+    height: 40px;
+    border-radius: 1px;
+}
+
+.stream-2 {
+    top: 60%;
+    left: 72%;
+    width: 1px;
+    height: 30px;
+    border-radius: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(129, 140, 248, 0.15), transparent);
+}
+
+.stream-3 {
+    top: 25%;
+    left: 22%;
+    width: 1px;
+    height: 35px;
+    border-radius: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(16, 185, 129, 0.15), transparent);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .transfers-container {
+        flex-direction: column;
+        padding: 40px 24px;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .transfers-content {
+        max-width: 100%;
+    }
+    
+    .transfers-title {
+        font-size: 2.4rem;
+    }
+    
+    .transfers-actions {
+        justify-content: center;
+    }
+    
+    .transfers-visual {
+        min-height: 360px;
+    }
+    
+    .globe-scene {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .ring-1 { width: 260px; height: 260px; }
+    .ring-2 { width: 190px; height: 190px; }
+    .ring-3 { width: 120px; height: 120px; }
+}
+
+@media (max-width: 480px) {
+    .money-transfers {
+        padding: 60px 16px;
+    }
+    
+    .transfers-container {
+        padding: 32px 16px;
+    }
+    
+    .transfers-title {
+        font-size: 1.8rem;
+    }
+    
+    .transfers-description {
+        font-size: 1rem;
+    }
+    
+    .transfers-actions {
+        flex-direction: column;
+    }
+    
+    .btn-get-started,
+    .btn-speak-sales {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .transfers-visual {
+        min-height: 280px;
+    }
+    
+    .globe-scene {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .ring-1 { width: 200px; height: 200px; }
+    .ring-2 { width: 150px; height: 150px; }
+    .ring-3 { width: 100px; height: 100px; }
+    
+    .currency-symbol {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* ===== GLOBAL TRANSFERS SECTION ===== */
+.global-transfers {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px;
+}
+
+.global-container {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    padding: 60px;
+    position: relative;
+}
+
+/* Left Visual */
+.global-visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    min-height: 450px;
+}
+
+.savings-scene {
+    position: relative;
+    width: 360px;
+    height: 400px;
+}
+
+/* Vault / Safe */
+.savings-vault {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.vault-body {
+    width: 140px;
+    height: 160px;
+    background: linear-gradient(180deg, #2a3a5c 0%, #1a2744 40%, #0f1a30 100%);
+    border-radius: 20px 20px 8px 8px;
+    position: relative;
+    border: 2px solid rgba(129, 140, 248, 0.3);
+    box-shadow: 
+        0 0 30px rgba(129, 140, 248, 0.15),
+        inset 0 0 30px rgba(129, 140, 248, 0.05);
+    overflow: hidden;
+}
+
+.vault-shine {
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width: 40%;
+    height: 25%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent);
+    border-radius: 50%;
+}
+
+.vault-lock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.lock-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(167, 139, 250, 0.6);
+    background: radial-gradient(circle at 40% 35%, rgba(167, 139, 250, 0.2), transparent);
+    box-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
+}
+
+.lock-keyhole {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 12px;
+    background: rgba(34, 211, 238, 0.6);
+    border-radius: 50% 50% 2px 2px;
+    box-shadow: 0 0 8px rgba(34, 211, 238, 0.4);
+}
+
+.vault-base {
+    width: 160px;
+    height: 12px;
+    background: linear-gradient(90deg, #1a2744, #2a3a5c, #1a2744);
+    border-radius: 0 0 6px 6px;
+    margin-top: -2px;
+    border: 2px solid rgba(129, 140, 248, 0.3);
+    border-top: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Floating coins */
+.savings-coin {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.coin-1 {
+    top: 10%;
+    left: 25%;
+    background: radial-gradient(circle at 40% 35%, #fbbf24, #b45309);
+    color: #fef3c7;
+    border: 2px solid #f59e0b;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+    animation: coinFloat1 4s ease-in-out infinite;
+}
+
+.coin-2 {
+    top: 15%;
+    right: 20%;
+    background: radial-gradient(circle at 40% 35%, #cbd5e1, #64748b);
+    color: #f1f5f9;
+    border: 2px solid #94a3b8;
+    box-shadow: 0 0 20px rgba(148, 163, 184, 0.5);
+    animation: coinFloat2 4.5s ease-in-out infinite;
+}
+
+.coin-3 {
+    bottom: 20%;
+    left: 15%;
+    background: radial-gradient(circle at 40% 35%, #60a5fa, #1d4ed8);
+    color: #dbeafe;
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    animation: coinFloat3 5s ease-in-out infinite;
+}
+
+.coin-4 {
+    bottom: 15%;
+    right: 25%;
+    background: radial-gradient(circle at 40% 35%, #5eead4, #0f766e);
+    color: #ccfbf1;
+    border: 2px solid #14b8a6;
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.5);
+    animation: coinFloat4 4.2s ease-in-out infinite;
+}
+
+@keyframes coinFloat1 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+@keyframes coinFloat2 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(-180deg); }
+}
+
+@keyframes coinFloat3 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(180deg); }
+}
+
+@keyframes coinFloat4 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-22px) rotate(-180deg); }
+}
+
+/* Exchange rate bars */
+.rate-bar {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: rgba(15, 22, 45, 0.85);
+    border: 1px solid rgba(60, 80, 140, 0.2);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    min-width: 180px;
+    z-index: 3;
+    font-size: 0.8rem;
+}
+
+.rate-up {
+    top: 5%;
+    right: 0;
+}
+
+.rate-down {
+    top: 28%;
+    right: -10px;
+}
+
+.rate-up:last-child {
+    top: auto;
+    bottom: 8%;
+    right: 5%;
+}
+
+.rate-currency {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.rate-value {
+    font-weight: 600;
+}
+
+.rate-positive {
+    color: var(--success);
+}
+
+.rate-negative {
+    color: var(--error);
+}
+
+/* Glow orbs */
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    pointer-events: none;
+}
+
+.glow-1 {
+    top: 20%;
+    left: 30%;
+    width: 100px;
+    height: 100px;
+    background: rgba(129, 140, 248, 0.12);
+}
+
+.glow-2 {
+    bottom: 10%;
+    right: 20%;
+    width: 80px;
+    height: 80px;
+    background: rgba(34, 211, 238, 0.1);
+}
+
+/* Right Content */
+.global-content {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+}
+
+.global-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: var(--primary);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+.global-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.global-title .gradient-text {
+    background: linear-gradient(135deg, #818cf8, #a78bfa, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.global-description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 36px;
+}
+
+.btn-open-account {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 14px 30px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-bounce);
+    box-shadow: 0 4px 15px rgba(129, 140, 248, 0.3);
+    font-family: var(--font-body);
+}
+
+.btn-open-account:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 140, 248, 0.4);
+}
+
+.btn-open-account:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(129, 140, 248, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .global-container {
+        flex-direction: column-reverse;
+        padding: 40px 24px;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .global-content {
+        max-width: 100%;
+    }
+    
+    .global-title {
+        font-size: 2.2rem;
+    }
+    
+    .global-visual {
+        min-height: 380px;
+    }
+    
+    .savings-scene {
+        width: 300px;
+        height: 340px;
+    }
+    
+    .rate-bar {
+        min-width: 150px;
+        font-size: 0.7rem;
+        padding: 8px 10px;
+    }
+    
+    .rate-down {
+        right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .global-transfers {
+        padding: 60px 16px;
+    }
+    
+    .global-container {
+        padding: 32px 16px;
+    }
+    
+    .global-title {
+        font-size: 1.8rem;
+    }
+    
+    .global-description {
+        font-size: 1rem;
+    }
+    
+    .global-visual {
+        min-height: 320px;
+    }
+    
+    .savings-scene {
+        width: 260px;
+        height: 300px;
+    }
+    
+    .vault-body {
+        width: 110px;
+        height: 130px;
+    }
+    
+    .vault-base {
+        width: 130px;
+    }
+    
+    .savings-coin {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+    
+    .rate-bar {
+        min-width: 130px;
+        font-size: 0.65rem;
+        padding: 6px 8px;
+    }
+}
 </style>
 </head>
 <body>
@@ -2086,7 +3000,145 @@
 <!-- Live region for screen reader announcements -->
 <div aria-live="polite" class="sr-only" id="liveRegion"></div>
 
+<!-- ===== MONEY TRANSFERS SECTION ===== -->
+<section class="money-transfers">
+    <div class="transfers-container">
+        <!-- Left Content -->
+        <div class="transfers-content">
+            <span class="transfers-label">MONEY TRANSFERS</span>
+            <h2 class="transfers-title">
+                Send your money <span class="gradient-text">globally</span>
+            </h2>
+            <p class="transfers-description">
+                Transfer money in 35+ currencies to 150+ destinations fast, without breaking your budget.
+            </p>
+            <div class="transfers-actions">
+                <a href="#" class="btn-get-started">
+                    Get started <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#" class="btn-speak-sales">Speak to Sales</a>
+            </div>
+        </div>
+        
+                <!-- Right Visual -->
+        <div class="transfers-visual">
+            <div class="globe-scene">
+                <!-- Dark tech background grid -->
+                <div class="tech-grid"></div>
+                
+                <!-- Outer orbit ring with glow -->
+                <div class="orbit-ring orbit-outer"></div>
+                <div class="orbit-ring orbit-middle"></div>
+                <div class="orbit-ring orbit-inner"></div>
+                
+                <!-- 3D Globe -->
+                <div class="futuristic-globe">
+                    <div class="globe-core"></div>
+                    <div class="globe-grid-lines"></div>
+                    <div class="globe-horizon"></div>
+                    <div class="globe-highlight"></div>
+                </div>
+                
+                <!-- Orbiting money icons -->
+                <div class="orbit-item orbit-item-1">
+                    <div class="money-icon coin-gold">¢</div>
+                </div>
+                <div class="orbit-item orbit-item-2">
+                    <div class="money-icon coin-silver">$</div>
+                </div>
+                <div class="orbit-item orbit-item-3">
+                    <div class="money-icon banknote-green">€</div>
+                </div>
+                <div class="orbit-item orbit-item-4">
+                    <div class="money-icon coin-blue">₿</div>
+                </div>
+                <div class="orbit-item orbit-item-5">
+                    <div class="money-icon banknote-purple">£</div>
+                </div>
+                <div class="orbit-item orbit-item-6">
+                    <div class="money-icon coin-teal">¥</div>
+                </div>
+                
+                <!-- Particle trail dots -->
+                <div class="particle particle-1"></div>
+                <div class="particle particle-2"></div>
+                <div class="particle particle-3"></div>
+                <div class="particle particle-4"></div>
+                <div class="particle particle-5"></div>
+                <div class="particle particle-6"></div>
+                <div class="particle particle-7"></div>
+                <div class="particle particle-8"></div>
+                
+                <!-- Data streams -->
+                <div class="data-stream stream-1"></div>
+                <div class="data-stream stream-2"></div>
+                <div class="data-stream stream-3"></div>
+            </div>
+        </div>
+    </div>
+</section>
 
+
+
+<!-- ===== GLOBAL TRANSFERS SECTION ===== -->
+<section class="global-transfers">
+    <div class="global-container">
+        <!-- Left Visual -->
+        <div class="global-visual">
+            <div class="savings-scene">
+                <!-- Piggy bank / savings container -->
+                <div class="savings-vault">
+                    <div class="vault-body">
+                        <div class="vault-shine"></div>
+                        <div class="vault-lock">
+                            <div class="lock-circle"></div>
+                            <div class="lock-keyhole"></div>
+                        </div>
+                    </div>
+                    <div class="vault-base"></div>
+                </div>
+                
+                <!-- Floating coins orbiting the vault -->
+                <div class="savings-coin coin-1">$</div>
+                <div class="savings-coin coin-2">€</div>
+                <div class="savings-coin coin-3">£</div>
+                <div class="savings-coin coin-4">¥</div>
+                
+                <!-- Exchange rate bars -->
+                <div class="rate-bar rate-up">
+                    <span class="rate-currency">EUR/USD</span>
+                    <span class="rate-value rate-positive">▲ 1.0821</span>
+                </div>
+                <div class="rate-bar rate-down">
+                    <span class="rate-currency">GBP/USD</span>
+                    <span class="rate-value rate-positive">▲ 1.2645</span>
+                </div>
+                <div class="rate-bar rate-up">
+                    <span class="rate-currency">USD/JPY</span>
+                    <span class="rate-value rate-negative">▼ 149.32</span>
+                </div>
+                
+                <!-- Glow effects -->
+                <div class="glow-orb glow-1"></div>
+                <div class="glow-orb glow-2"></div>
+            </div>
+        </div>
+        
+        <!-- Right Content -->
+        <div class="global-content">
+            <span class="global-label">GLOBAL TRANSFERS</span>
+            <h2 class="global-title">
+                Save with <span class="gradient-text">global transfers</span> using competitive exchange rates
+            </h2>
+            <p class="global-description">
+                Exchange currencies at fair, market-aligned rates when you send money abroad, helping you keep more control over your international payments. Enjoy a set number of low or no-fee international transfers each month, depending on your plan.
+            </p>
+            <a href="#" class="btn-open-account">
+                <i class="fas fa-user-plus"></i> Open account
+            </a>
+        </div>
+    </div>
+</section>
 
   <script>
 

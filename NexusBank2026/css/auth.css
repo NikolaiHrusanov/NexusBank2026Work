@@ -153,10 +153,17 @@ body {
 .auth-brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   text-decoration: none;
   color: var(--text-1);
   animation: slideDown .5s var(--ease-out) both;
+}
+
+.auth-brand img {
+  width: 85px;
+  height: 85px;
+  border-radius: 0;
+  display: block;
 }
 
 .brand-logo {
